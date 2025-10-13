@@ -1,0 +1,64 @@
+<html>
+<head>
+  <title>INVERSEDATA // FASE II</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #000;
+      color: #00ffcc;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      padding-top: 10%;
+    }
+    .glitch {
+      font-size: 1.2em;
+      animation: flicker 2s infinite;
+    }
+    @keyframes flicker {
+      0% { opacity: 1; }
+      5% { opacity: 0.4; }
+      10% { opacity: 1; }
+      20% { opacity: 0.2; }
+      25% { opacity: 1; }
+      100% { opacity: 1; }
+    }
+    button {
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+    #hidden {
+      display: none;
+      margin-top: 30px;
+      color: #ccc;
+    }
+  </style>
+</head>
+<body>
+  <h1>REVER-S17 // FASE II</h1>
+  <p class="glitch">Erro de sincronização detectado.</p>
+  <p>Sua linha temporal não está consistente.</p>
+  <p>Iniciando protocolo de isolamento cognitivo...</p>
+
+  <button onclick="document.getElementById('hidden').style.display='block'">
+    EXECUTAR VARREDURA
+  </button>
+
+  <div id="hidden">
+    <p><strong>Resultado:</strong> 3 instâncias divergentes encontradas.</p>
+    <p>Memória residual: <code>17:42</code></p>
+    <p>Fragmento detectado:</p>
+    <p style="color:#999;">01000001 01110010 01100011 01100001</p>
+    <p>Decodifique para prosseguir. Código: <code>S17-Δ1989</code></p>
+    <p style="margin-top:20px;color:#555;">(Use a sequência binária para descobrir a palavra-chave.)</p>
+  </div>
+</body>
+</html>
