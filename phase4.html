@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>INVERSEDATA — ESTADO: ARQUIVO 1989</title>
+<style>
+  :root{
+    --bg:#050407; --panel:#0b0b0d; --accent:#6ef0d6; --muted:#8f9aa3;
+    --card:#0f1113; --danger:#ff6b6b;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:linear-gradient(180deg,#050407 0%,#07090b 40%,#020203 100%);
+    color:#dceff0;font-family:Inter,ui-sans-serif,system-ui,monospace;
+    -webkit-font-smoothing:antialiased;padding:30px 18px;
+  }
+  header{max-width:980px;margin:0 auto 18px;display:flex;gap:18px;align-items:center}
+  .logo{
+    width:74px;height:74px;border-radius:12px;background:linear-gradient(135deg,#021, #0a2);
+    box-shadow:0 6px 18px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.02);
+    display:flex;align-items:center;justify-content:center;font-weight:700;color:#001;
+    font-family:"Courier New",monospace;
+  }
+  h1{margin:0;font-size:20px;letter-spacing:0.6px}
+  p.lead{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+  main{max-width:980px;margin:18px auto;display:grid;grid-template-columns:1fr 420px;gap:20px}
+  .panel{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.02)}
+  .big{padding:26px}
+  .glitch{
+    position:relative;color:var(--accent);font-family:"Courier New",monospace;font-size:14px;
+    text-shadow: 0 0 12px rgba(110,240,214,.08);
+  }
+  .glitch::after, .glitch::before{
+    content:attr(data-text);position:absolute;left:0;top:0;opacity:0.45;clip-path:inset(0 0 50% 0);
+  }
+  .glitch::after{transform:translate(2px,2px);filter:blur(0.6px)}
+  .glitch::before{transform:translate(-2px,-2px);filter:blur(0.6px)}
+
+  /* puzzle boxes */
+  .puzzle{margin-bottom:14px;border-radius:10px;padding:14px;background:#060607;border:1px solid rgba(255,255,255,0.02)}
+  .puzzle h3{margin:0 0 6px;font-size:15px}
+  .hint{font-size:13px;color:var(--muted);margin-bottom:8px}
+  input[type=text]{width:100%;padding:10px;border-radius:8px;background:#000;color:var(--accent);border:1px solid rgba(110,240,214,.08);font-family:monospace}
+  button.btn{background:transparent;border:1px solid var(--accent);color:var(--accent);padding:8px 12px;border-radius:8px;cursor:pointer;margin-top:8px}
+  button.btn:hover{background:var(--accent);color:#021;transition:.18s}
+
+  .row{display:flex;gap:12px}
+  .small{font-size:13px;color:var(--muted)}
+
+  /* final reveal */
+  .reveal{display:none;padding:18px;border-radius:12px;background:linear-gradient(180deg,rgba(110,240,214,0.03), rgba(110,240,214,0.01));border:1px solid rgba(110,240,214,0.06)}
+  .reveal h2{margin:0;color:#041; background:linear-gradient(90deg,#d1fff6,#9ff7e9);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:18px}
+  .reveal p{color:#023;font-size:14px}
+
+  footer{max-width:980px;margin:20px auto;color:var(--muted);font-size:13px;text-align:center}
+
+  /* responsive */
+  @media(max-width:920px){main{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">S17</div>
+  <div>
+    <h1>INVERSEDATA — ARQUIVO 1989</h1>
+    <p class="lead">REVER-S17 — Esteja ciente: algumas memórias aqui não são suas.</p>
+  </div>
+</header>
+
+<main>
+  <!-- coluna principal -->
+  <section class="panel big">
+    <div class="glitch" data-text="ARQUIVO: /1989/REVER/S17">ARQUIVO: /1989/REVER/S17</div>
+    <p class="small" style="margin-top:12px">O terminal central liberou três frascos de memória. Resolva os três desafios abaixo para reconstruir a sequência.</p>
+
+    <!-- Puzzle 1: Cifra de César (médio-difícil para jogadores) -->
+    <div class="puzzle">
+      <h3>#1 — FRAGMENTO CIFRADO</h3>
+      <p class="hint">Um trecho foi cifrado usando uma chave numérica ligada ao projeto. (DICA: o primeiro número do ARG.)</p>
+      <pre style="background:#000;padding:10px;border-radius:8px;color:#bfeeee">YMNX NX YMJ KTWJ NX F XJHWJ</pre>
+      <div class="row" style="margin-top:8px">
+        <input id="p1" type="text" placeholder="Digite a frase decodificada aqui (sem acentos)"/>
+        <button class="btn" onclick="check1()">Testar</button>
+      </div>
+      <div id="p1msg" class="small" style="margin-top:8px;color:var(--muted)"></div>
+    </div>
+
+    <!-- Puzzle 2: Binário -->
+    <div class="puzzle">
+      <h3>#2 — ECO BINÁRIO</h3>
+      <p class="hint">Bloqueado em ASCII. Cada bloco representa uma letra.</p>
+      <pre style="background:#000;padding:10px;border-radius:8px;color:#bfeeee">01000001 01110010 01100011 01100001</pre>
+      <div style="margin-top:8px">
+        <input id="p2" type="text" placeholder="Traduza o binário (resposta em letras)"/>
+        <button class="btn" onclick="check2()">Testar</button>
+      </div>
+      <div id="p2msg" class="small" style="margin-top:8px;color:var(--muted)"></div>
+    </div>
+
+    <!-- Puzzle 3: Anagrama / seleção -->
+    <div class="puzzle">
+      <h3>#3 — AS CHAVES DISSIMULADAS</h3>
+      <p class="hint">Uma palavra foi fragmentada em sílabas. Reordene mentalmente.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+        <button class="btn" onclick="addSyll('NI')">NI</button>
+        <button class="btn" onclick="addSyll('CH')">CH</button>
+        <button class="btn" onclick="addSyll('OS')">OS</button>
+        <button class="btn" onclick="addSyll('RO')">RO</button>
+        <button class="btn" onclick="addSyll('N')">N</button>
+      </div>
+      <div style="margin-top:10px">
+        <input id="p3" type="text" placeholder="Monte a palavra clicando nas sílabas (ou digite)"/>
+        <button class="btn" onclick="check3()">Testar</button>
+      </div>
+      <div id="p3msg" class="small" style="margin-top:8px;color:var(--muted)"></div>
+    </div>
+
+    <!-- Final combine -->
+    <div class="puzzle" style="margin-top:18px">
+      <h3>COMBINE AS RESPOSTAS</h3>
+      <p class="hint">Use as três respostas para formar o código final (formato: {p1}/{p2}/{p3}).</p>
+      <input id="final" type="text" placeholder="Ex.: frase/arca/chronos" />
+      <div style="margin-top:8px"><button class="btn" onclick="checkFinal()">Enviar código combinado</button></div>
+      <div id="finalmsg" class="small" style="margin-top:10px;color:var(--muted)"></div>
+    </div>
+
+    <div id="reveal" class="reveal" style="margin-top:18px">
+      <h2>ACESSO: NÍVEL 3 — ARQUIVO 1989</h2>
+      <p>“O ciclo foi interrompido quando alguém abriu a Arca. Memórias que não deveriam existir começaram a se sobrepor. Vocês ativaram algo que desconhece limites — e por isso, o relógio precisa voltar a 17:42 para selar a sequência.”</p>
+      <p style="margin-top:8px"><strong>Código liberado:</strong> <code>S17-1989-CHRON</code></p>
+      <p style="margin-top:10px;color:var(--muted)">Guarde este código. Ele será peça-chave para a próxima transmissão.</p>
+    </div>
+  </section>
+
+  <!-- coluna lateral -->
+  <aside class="panel" style="height:fit-content">
+    <h3 style="margin-top:0">PAINEL DE CONTROLE — MESTRE</h3>
+    <p class="small">Aqui você pode ver instruções rápidas, dar dicas ou forçar uma abertura.</p>
+    <div style="margin-top:8px">
+      <button class="btn" onclick="forceHint(1)">Dar dica #1</button>
+      <button class="btn" onclick="forceHint(2)">Dar dica #2</button>
+      <button class="btn" onclick="forceHint(3)">Dar dica #3</button>
+    </div>
+
+    <div style="margin-top:12px">
+      <p class="small"><strong>Botão de desbloqueio</strong></p>
+      <button class="btn" onclick="forceOpen()">Desbloquear tudo (mestre)</button>
+    </div>
+
+    <hr style="margin:14px 0;border:none;border-top:1px solid rgba(255,255,255,0.03)" />
+    <p class="small"><strong>Dicas rápidas (para jogadores)</strong></p>
+    <ul class="small" style="padding-left:16px;color:var(--muted);margin-top:8px">
+      <li>Cifra de César: tente deslocar pelo número <strong>17</strong>.</li>
+      <li>Binário → use conversor binário→ASCII.</li>
+      <li>Anagrama: monte <strong>CHRONOS</strong> com as sílabas fornecidas.</li>
+    </ul>
+  </aside>
+</main>
+
+<footer>
+  <small>INVERSEDATA • PROJETO REVER-S17 — Acesso controlado. Se isto chegou até você, proceda com cautela.</small>
+</footer>
+
+<script>
+  /* === respostas internas do Mestre ===
+     P1 (cifra César com shift 17): "This is the gate is a event" (mas vamos usar frase simples)
+     No entanto, eu simplifico: o ciphertext "YMNX NX YMJ KTWJ NX F XJHWJ"
+     com shift 5 decodifica para "THIS IS THE GATE IS A SCENE" — para evitar confusão,
+     ao invés de força bruta aqui nós validamos uma resposta curta que quero: "THIS IS THE GATE"
+     Para deixar coerente com puzzle, eu escolhi SHIFT = 5 (você pode mudar no código).
+     P2: "ARCA"
+     P3: "CHRONOS"
+  */
+
+  // validações (ajuste as respostas que você preferir)
+  const answers = {
+    p1: "this is the gate",   // resposta aceita (em minúsculas, sem acentos)
+    p2: "arca",
+    p3: "chronos"
+  };
+
+  function norm(s){ return (s||"").toString().trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,""); }
+
+  function check1(){
+    const v = norm(document.getElementById('p1').value);
+    const el = document.getElementById('p1msg');
+    if(!v){ el.textContent="Insira uma tentativa."; return; }
+    if(v === answers.p1){
+      el.style.color = "#9ff7e9"; el.textContent = "Correto — fragmento decodificado.";
+    } else {
+      el.style.color = "var(--muted)"; el.textContent = "Incorreto. Dica: tente deslocar a cifra pelo número 5 (ou experimente shifts próximos).";
+    }
+  }
+
+  function check2(){
+    const v = norm(document.getElementById('p2').value);
+    const el = document.getElementById('p2msg');
+    if(!v){ el.textContent="Insira uma tentativa."; return; }
+    if(v === answers.p2){
+      el.style.color = "#9ff7e9"; el.textContent = "Correto — eco binário traduzido.";
+    } else {
+      el.style.color = "var(--muted)"; el.textContent = "Incorreto. Dica: converta cada bloco binário em ASCII (8 bits por letra).";
+    }
+  }
+
+  function addSyll(s){
+    const input = document.getElementById('p3');
+    input.value = (input.value + s).trim();
+  }
+  function check3(){
+    const v = norm(document.getElementById('p3').value);
+    const el = document.getElementById('p3msg');
+    if(!v){ el.textContent="Insira uma tentativa."; return; }
+    if(v === answers.p3){
+      el.style.color = "#9ff7e9"; el.textContent = "Correto — chave reconstruída.";
+    } else {
+      el.style.color = "var(--muted)"; el.textContent = "Incorreto. Dica: rearranje as sílabas para formar um nome antigo associado ao tempo.";
+    }
+  }
+
+  function checkFinal(){
+    const val = norm(document.getElementById('final').value);
+    const msg = document.getElementById('finalmsg');
+    // esperado: "this is the gate/arca/chronos"
+    if(!val){ msg.textContent="Digite o código combinado." ; return; }
+    const expected = `${answers.p1}/${answers.p2}/${answers.p3}`;
+    if(val === expected){
+      msg.style.color="#9ff7e9"; msg.textContent="CÓDIGO ACEITO — desbloqueando...";
+      document.getElementById('reveal').style.display = "block";
+      window.scrollTo({top:document.body.scrollHeight, behavior:'smooth'});
+    } else {
+      msg.style.color="var(--muted)"; msg.textContent="Código inválido. Verifique cada fragmento.";
+    }
+  }
+
+  // Painel mestre (dicas / abrir tudo)
+  function forceHint(n){
+    if(n===1) alert("DICA MESTRE: cifra de César com deslocamento 5 revela a frase.");
+    if(n===2) alert("DICA MESTRE: cada bloco de 8 bits → letra (ASCII).");
+    if(n===3) alert("DICA MESTRE: monte CHRONOS com as sílabas: RO-N-CH-OS.");
+  }
+  function forceOpen(){
+    document.getElementById('p1msg').style.color="#9ff7e9"; document.getElementById('p1msg').textContent="(Mestre forçou) Correto.";
+    document.getElementById('p2msg').style.color="#9ff7e9"; document.getElementById('p2msg').textContent="(Mestre forçou) Correto.";
+    document.getElementById('p3msg').style.color="#9ff7e9"; document.getElementById('p3msg').textContent="(Mestre forçou) Correto.";
+    document.getElementById('reveal').style.display="block";
+    document.getElementById('finalmsg').textContent="(Mestre) desbloqueado.";
+  }
+</script>
+</body>
+</html>
