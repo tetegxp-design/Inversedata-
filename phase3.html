@@ -1,0 +1,82 @@
+<html>
+<head>
+  <title>INVERSEDATA // ACESSO RESTRITO</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background: #000;
+      color: #00ffcc;
+      font-family: "Courier New", monospace;
+      text-align: center;
+      padding-top: 10%;
+    }
+    input {
+      background: #000;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 10px;
+      font-size: 1em;
+      width: 200px;
+      text-align: center;
+    }
+    button {
+      background: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      padding: 10px 20px;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #00ffcc;
+      color: #000;
+    }
+    #msg {
+      display: none;
+      margin-top: 40px;
+      color: #ccc;
+      font-size: 1em;
+    }
+    #error {
+      color: red;
+      margin-top: 10px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>TERMINAL REVER-S17</h1>
+  <p>Insira a palavra-chave para autenticação:</p>
+  <input type="text" id="input" placeholder="•••••" maxlength="10">
+  <button onclick="checkCode()">ENVIAR</button>
+
+  <div id="error">Código incorreto. Tente novamente.</div>
+
+  <div id="msg">
+    <p><strong>ACESSO CONCEDIDO.</strong></p>
+    <p>Conexão estabelecida com o arquivo central.</p>
+    <p><em>Mensagem de E. Arkanum:</em></p>
+    <p style="margin-top:20px;color:#00ffee;">
+      “Vocês abriram a Arca.  
+      Memórias que deveriam permanecer ocultas agora estão soltas.  
+      Se chegaram até aqui, não olhem para trás.  
+      Em 1989, algo começou — e o ciclo não terminou.”  
+    </p>
+    <p style="margin-top:30px;">Novo código: <code>S17-A1989-Ω</code></p>
+    <p style="color:#555;">A próxima sequência será liberada quando o relógio marcar 17:42 novamente.</p>
+  </div>
+
+  <script>
+    function checkCode() {
+      const value = document.getElementById("input").value.trim().toLowerCase();
+      if (value === "arca") {
+        document.getElementById("msg").style.display = "block";
+        document.getElementById("error").style.display = "none";
+      } else {
+        document.getElementById("error").style.display = "block";
+      }
+    }
+  </script>
+</body>
+</html>
