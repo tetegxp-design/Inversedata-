@@ -1,0 +1,97 @@
+<html>
+<head>
+  <title>R&C // HALLOWEEN: HOTEL BELVEDERE</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      background-color: black;
+      color: #FF3C3C;
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      overflow: hidden;
+    }
+    #terminal {
+      width: 80%;
+      max-width: 800px;
+      margin: 5% auto;
+      white-space: pre-wrap;
+      border-left: 2px solid #FF3C3C;
+      padding-left: 20px;
+      animation: flicker 1.2s infinite alternate;
+    }
+    @keyframes flicker {
+      0% {opacity: 0.95;}
+      100% {opacity: 1;}
+    }
+    .blink {
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      50% {opacity: 0;}
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+
+  <script>
+    const terminal = document.getElementById("terminal");
+
+    const intro = [
+      "> SISTEMA R&C ACESSADO.",
+      "> PROTOCOLO DE HALLOWEEN ATIVADO...",
+      "> Detecção de ecos temporais iniciada.",
+      "> Conexão instável com a linha do tempo principal.",
+      "> Corrupção de memória: 37% e aumentando...",
+      "> Fragmentos encontrados.",
+      "> Tentando reconstruir transmissão perdida..."
+    ];
+
+    const hotelText = `
+🕯️ HOTEL BELVEDERE — ONDE O TEMPO DESCANSA
+
+Bem-vindo ao Hotel Belvedere, um refúgio acolhedor no coração da estrada BR-308.  
+Aqui, o som da chuva encontra o sussurro do vento, e cada quarto guarda uma história única — feita pra você.
+
+Nossas acomodações são simples, mas cheias de charme: paredes que respiram memórias,  
+corredores que nunca parecem os mesmos e um espelho em cada cômodo, pra que você nunca se sinta sozinho.
+
+O atendimento é sempre caloroso. O senhor Albano vai te receber com um sorriso — ele adora novos hóspedes.  
+E se ouvir passos à noite, não se preocupe… deve ser o eco de outro visitante tentando achar o caminho de volta pro quarto.
+
+O relógio pode até parar, mas o conforto aqui é eterno.  
+As luzes piscam, a chuva cai, e o 313 está sempre disponível pra você.
+
+E você 🫵🏽, que tal vir visitar a gente?`;
+
+    let i = 0;
+
+    function typeText(lines, callback, speed = 70) {
+      if (i < lines.length) {
+        terminal.innerHTML += lines[i] + "\n";
+        i++;
+        setTimeout(() => typeText(lines, callback, speed), 800);
+      } else {
+        callback();
+      }
+    }
+
+    function revealHotel() {
+      terminal.innerHTML += "\n> Transmissão corrompida recebida...\n> Decodificando...\n\n";
+      let j = 0;
+      function typeHotel() {
+        if (j < hotelText.length) {
+          terminal.innerHTML += hotelText.charAt(j);
+          j++;
+          setTimeout(typeHotel, 25);
+        } else {
+          terminal.innerHTML += "\n\n> Transmissão encerrada.\n> Pressione ESC para sair.\n<span class='blink'>█</span>";
+        }
+      }
+      setTimeout(typeHotel, 1500);
+    }
+
+    typeText(intro, revealHotel);
+  </script>
+</body>
+</html>
