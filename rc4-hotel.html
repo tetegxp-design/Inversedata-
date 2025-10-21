@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>R&C // HALLOWEEN: HOTEL BELVEDERE</title>
+<style>
+  body {
+    background-color: black;
+    color: #FF3C3C;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    margin:0;
+    padding:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+  }
+  .screen {
+    width: 80%;
+    max-width: 800px;
+    background-color: #0a0a0a;
+    border-left: 2px solid #FF3C3C;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(255, 60, 60,0.2);
+  }
+  input {
+    background: black;
+    border: 1px dashed #FF3C3C;
+    color: #FF3C3C;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    padding: 6px;
+    border-radius:5px;
+    outline:none;
+  }
+  button {
+    background: #FF3C3C;
+    color: black;
+    border:none;
+    padding:6px 12px;
+    margin-left:8px;
+    border-radius:5px;
+    cursor:pointer;
+    font-family:'Courier New', monospace;
+  }
+  .line { white-space: pre-wrap; margin-bottom:6px; }
+  .blink { animation: blink 1s infinite; }
+  @keyframes blink { 50% {opacity:0;} }
+  #hotel-msg {margin-top:20px;}
+  #reserve {margin-top:10px; font-weight:bold;}
+</style>
+</head>
+<body>
+  <div class="screen">
+    <div id="terminal">
+      <div class="line">[R&C HALLOWEEN] Bem-vindo! Por favor, digite seu nome:</div>
+      <input type="text" id="nameInput" placeholder="Seu nome...">
+      <button id="enterBtn">ENTRAR</button>
+      <div id="macabro" style="margin-top:20px;"></div>
+      <button id="nextBtn" style="display:none; margin-top:10px;">Prosseguir</button>
+      <div id="hotel-msg"></div>
+      <div id="reserve"></div>
+    </div>
+  </div>
+
+<script>
+const enterBtn = document.getElementById('enterBtn');
+const nameInput = document.getElementById('nameInput');
+const macabroDiv = document.getElementById('macabro');
+const nextBtn = document.getElementById('nextBtn');
+const hotelMsg = document.getElementById('hotel-msg');
+const reserveMsg = document.getElementById('reserve');
+
+const macabroText = [
+`Bem-vindo ao evento de Halloween R&C, `,
+`onde a noite sussurra segredos esquecidos.`,
+`Seus passos ecoam em corredores que não existem,`,
+`e sombras lembram nomes que você não pronunciou.`,
+`Olhe ao redor... a escuridão observa cada escolha.`,
+`Prepare-se, pois a iniciação começou...`
+].join('\n');
+
+const hotelText = `
+🕯️ HOTEL BELVEDERE — ONDE O TEMPO DESCANSA
+
+Bem-vindo ao Hotel Belvedere, um refúgio acolhedor no coração da estrada BR-308.
+Aqui, o som da chuva encontra o sussurro do vento, e cada quarto guarda uma história única — feita pra você.
+
+Nossas acomodações são simples, mas cheias de charme: paredes que respiram memórias,
+corredores que nunca parecem os mesmos e um espelho em cada cômodo, pra que você nunca se sinta sozinho.
+
+O atendimento é sempre caloroso. O senhor Albano vai te receber com um sorriso — ele adora novos hóspedes.
+E se ouvir passos à noite, não se preocupe… deve ser o eco de outro visitante tentando achar o caminho de volta pro quarto.
+
+O relógio pode até parar, mas o conforto aqui é eterno.
+As luzes piscam, a chuva cai, e o 313 está sempre disponível pra você.
+
+E você 🫵🏽, que tal vir visitar a gente?
+`;
+
+function typeText(element, text, speed=30, callback=null) {
+  let i=0;
+  function typing() {
+    if(i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(typing, speed);
+    } else if(callback) callback();
+  }
+  typing();
+}
+
+enterBtn.addEventListener('click', ()=> {
+  const name = nameInput.value.trim() || "CONVIDADO";
+  nameInput.disabled = true;
+  enterBtn.disabled = true;
+  macabroDiv.textContent = '';
+  typeText(macabroDiv, macabroText.replace(/R&C/g, `R&C, ${name}`), 40, ()=> {
+    nextBtn.style.display = 'inline-block';
+  });
+});
+
+nextBtn.addEventListener('click', ()=>{
+  nextBtn.style.display = 'none';
+  hotelMsg.textContent = '';
+  typeText(hotelMsg, hotelText, 25, ()=>{
+    reserveMsg.textContent = "Mande mensagem para reservar seu quarto";
+  });
+});
+</script>
+</body>
+</html>
