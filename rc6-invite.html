@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R&C // Halloween Access</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, #000 40%, #200 100%);
+    color: #ff0000;
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+  }
+
+  .scanlines::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.1) 0px,
+      rgba(0,0,0,0.3) 2px,
+      rgba(0,0,0,0.1) 4px
+    );
+    pointer-events: none;
+    animation: flicker 2s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 0.95; }
+    50% { opacity: 1; }
+  }
+
+  .terminal {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid #ff0000;
+    box-shadow: 0 0 20px #900;
+    padding: 30px;
+    text-align: center;
+    max-width: 650px;
+    width: 90%;
+    border-radius: 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .glitch {
+    font-size: 1.3em;
+    letter-spacing: 1px;
+    text-shadow: 0 0 2px #f00, 0 0 5px #900;
+    animation: glitch 1.5s infinite;
+  }
+
+  @keyframes glitch {
+    0% { text-shadow: 2px 0 #900, -2px 0 #f00; }
+    25% { text-shadow: -2px -2px #f00, 2px 2px #900; }
+    50% { text-shadow: 2px 2px #f00, -2px -2px #900; }
+    75% { text-shadow: -2px 2px #900, 2px -2px #f00; }
+    100% { text-shadow: 2px 0 #900, -2px 0 #f00; }
+  }
+
+  input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid #ff0000;
+    color: #ff0000;
+    text-align: center;
+    font-size: 1.1em;
+    width: 80%;
+    margin-top: 15px;
+  }
+
+  input:focus { outline: none; }
+
+  button {
+    background: transparent;
+    border: 2px solid #ff0000;
+    color: #ff0000;
+    font-family: 'Share Tech Mono', monospace;
+    padding: 10px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #ff0000;
+    color: #000;
+    box-shadow: 0 0 15px #f00;
+  }
+
+  #output, #invite-section {
+    display: none;
+    white-space: pre-line;
+    margin-top: 20px;
+    text-align: left;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    background: #ff0000;
+    margin-left: 4px;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body class="scanlines">
+
+<div class="terminal">
+  <p class="glitch" id="intro"></p>
+  <div id="name-section" style="display:none;">
+    <p>Identifique-se, agente:</p>
+    <input type="text" id="agent-name" placeholder="Digite seu nome">
+    <br>
+    <button onclick="showInvite()">Confirmar</button>
+  </div>
+
+  <div id="output"></div>
+  <div id="invite-section">
+    <button onclick="window.location.href='https://discord.gg/u8k8H73E'">Entrar em R&C</button>
+  </div>
+</div>
+
+<script>
+const introText = "⧗ Sistema R&C // Inicializando...\nVerificando conexão dimensional...\nAnomalias detectadas ███████\nAcesso autorizado.";
+let i = 0;
+function typeIntro() {
+  if (i < introText.length) {
+    document.getElementById("intro").innerHTML += introText.charAt(i);
+    i++;
+    setTimeout(typeIntro, 50);
+  } else {
+    setTimeout(() => document.getElementById("name-section").style.display = "block", 800);
+  }
+}
+typeIntro();
+
+function showInvite() {
+  const name = document.getElementById("agent-name").value || "Agente";
+  const message = `🕯️ Bem-vindo, ${name}.\n\nO véu entre os mundos está instável.\nO tempo... corrompido.\nE a R&C precisa de mentes como a sua.\n\nSinais anômalos detectados na zona 13.\nOs ecos da noite de Halloween voltaram a se manifestar.\n\nVocê foi convocado para atravessar as sombras.\nLembre-se: alguns portais só se abrem uma vez.`;
+
+  document.getElementById("name-section").style.display = "none";
+  const output = document.getElementById("output");
+  output.style.display = "block";
+  output.innerHTML = "";
+  
+  let j = 0;
+  function typeMessage() {
+    if (j < message.length) {
+      output.innerHTML += message.charAt(j);
+      j++;
+      setTimeout(typeMessage, 35);
+    } else {
+      document.getElementById("invite-section").style.display = "block";
+    }
+  }
+  typeMessage();
+}
+</script>
+
+</body>
+</html>
