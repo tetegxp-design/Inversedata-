@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>R&C // Convite de Halloween</title>
+<style>
+  body {
+    background-color: #000;
+    color: #f00;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    padding: 50px;
+  }
+  .terminal {
+    border: 2px solid #f00;
+    border-radius: 10px;
+    padding: 20px;
+    display: inline-block;
+    text-align: left;
+    max-width: 600px;
+    width: 90%;
+    box-shadow: 0 0 20px #900;
+  }
+  .input-field {
+    background: none;
+    border: none;
+    border-bottom: 2px solid #f00;
+    color: #f00;
+    font-size: 1em;
+    width: 80%;
+    text-align: center;
+  }
+  .input-field:focus {
+    outline: none;
+  }
+  #invite-section {
+    display: none;
+    margin-top: 20px;
+    animation: fadein 2s forwards;
+  }
+  @keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+  @keyframes fadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  button {
+    background-color: transparent;
+    border: 2px solid #f00;
+    color: #f00;
+    font-family: 'Courier New', monospace;
+    padding: 10px 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  button:hover {
+    background-color: #f00;
+    color: #000;
+  }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+  <p id="intro-text"></p>
+  <div id="name-section" style="display:none;">
+    <p>Digite seu nome, agente:</p>
+    <input type="text" id="agent-name" class="input-field" placeholder="Seu nome">
+    <br><button onclick="showInvite()">Confirmar</button>
+  </div>
+  
+  <div id="invite-section">
+    <p id="message"></p>
+    <button onclick="window.location.href='https://discord.gg/u8k8H73E'">Entrar em R&C</button>
+  </div>
+</div>
+
+<script>
+const intro = "⧗ Sistema R&C iniciando... Verificando identidade... ███████... acesso liberado.";
+let i = 0;
+function typeIntro() {
+  if (i < intro.length) {
+    document.getElementById("intro-text").innerHTML += intro.charAt(i);
+    i++;
+    setTimeout(typeIntro, 60);
+  } else {
+    setTimeout(() => document.getElementById("name-section").style.display = "block", 600);
+  }
+}
+typeIntro();
+
+function showInvite() {
+  const name = document.getElementById("agent-name").value || "Agente";
+  const message = `🕯️ Bem-vindo, ${name}.  
+  As portas se abriram novamente nesta noite fria de Halloween.  
+  O chamado ecoa nos corredores da R&C... e só os corajosos respondem.  
+  Você foi convocado. O véu entre os mundos está mais fino do que nunca.  
+  Está pronto para atravessá-lo?`;
+  
+  document.getElementById("name-section").style.display = "none";
+  document.getElementById("message").innerText = "";
+  document.getElementById("invite-section").style.display = "block";
+  let j = 0;
+  function typeMessage() {
+    if (j < message.length) {
+      document.getElementById("message").innerText += message.charAt(j);
+      j++;
+      setTimeout(typeMessage, 30);
+    }
+  }
+  typeMessage();
+}
+</script>
+
+</body>
+</html>
