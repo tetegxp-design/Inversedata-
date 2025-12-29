@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Nada desaparece</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at top, #2a0000, #000);
+    color: #f2eaea;
+    font-family: "Georgia", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#container {
+    max-width: 760px;
+    text-align: center;
+    padding: 40px;
+    animation: fadeIn 3s ease;
+}
+
+#text {
+    font-size: 20px;
+    line-height: 1.9;
+    min-height: 180px;
+    transition: opacity 1s;
+}
+
+input {
+    margin-top: 30px;
+    padding: 10px;
+    width: 60%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #a33;
+    color: #fff;
+    font-size: 17px;
+    text-align: center;
+    outline: none;
+}
+
+button {
+    margin-top: 25px;
+    padding: 10px 30px;
+    background: transparent;
+    border: 1px solid #933;
+    color: #fff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: rgba(150, 0, 0, 0.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.glow {
+    text-shadow: 0 0 8px rgba(180, 0, 0, 0.6);
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+    <div id="text" class="glow"></div>
+
+    <input type="text" id="answer" placeholder="O que isso tudo significa?" />
+    <br>
+    <button onclick="check()">Responder</button>
+</div>
+
+<script>
+const text = document.getElementById("text");
+
+const messages = [
+    "Você sente, não sente?",
+    "Essa pressão silenciosa.",
+    "Como se algo estivesse… pendente.",
+    "Não é medo.",
+    "É consciência.",
+    "Você fez escolhas.",
+    "Mesmo quando achou que não estava escolhendo.",
+    "Algumas foram pequenas.",
+    "Outras mudaram mais do que você percebeu.",
+    "Nada disso sumiu.",
+    "Nada nunca some.",
+    "As coisas apenas esperam.",
+    "E um dia… cobram atenção.",
+    "Você não está sendo punido.",
+    "Só está sendo lembrado."
+];
+
+let i = 0;
+
+function nextText() {
+    if (i < messages.length) {
+        text.innerHTML = messages[i];
+        i++;
+        setTimeout(nextText, 3200);
+    }
+}
+
+nextText();
+
+function check() {
+    const v = document.getElementById("answer").value.toLowerCase();
+
+    if (
+        v.includes("consequência") ||
+        v.includes("escolha") ||
+        v.includes("passado") ||
+        v.includes("marca")
+    ) {
+        text.innerHTML = `
+        Você entendeu.<br><br>
+        Não existe retorno.<br>
+        Apenas continuação.<br><br>
+        O que foi feito…<br>
+        agora faz parte de você.
+        `;
+    } else {
+        text.innerHTML = `
+        Ainda não é isso.<br><br>
+        Mas o incômodo que você sentiu?<br>
+        Ele já é parte da resposta.
+        `;
+    }
+}
+</script>
+
+</body>
+</html>
