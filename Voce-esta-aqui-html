@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>...</title>
+
+<style>
+body {
+    background-color: #050505;
+    color: #e0e0e0;
+    font-family: "Courier New", monospace;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#container {
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+}
+
+#text {
+    font-size: 18px;
+    line-height: 1.6;
+    min-height: 120px;
+}
+
+input {
+    background: transparent;
+    border: 1px solid #555;
+    color: #fff;
+    padding: 10px;
+    width: 60%;
+    margin-top: 20px;
+    font-family: monospace;
+    display: none;
+}
+
+.cursor {
+    display: inline-block;
+    width: 10px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% {opacity: 1;}
+    50% {opacity: 0;}
+    100% {opacity: 1;}
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+    <div id="text"></div>
+    <input type="text" id="input" placeholder="digite aqui">
+</div>
+
+<script>
+const textElement = document.getElementById("text");
+const input = document.getElementById("input");
+
+const introText = "Quer respostas?";
+let index = 0;
+
+function typeText(text, callback) {
+    if (index < text.length) {
+        textElement.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(() => typeText(text, callback), 70);
+    } else if (callback) {
+        callback();
+    }
+}
+
+typeText(introText, () => {
+    setTimeout(() => {
+        input.style.display = "block";
+        input.focus();
+    }, 800);
+});
+
+input.addEventListener("keydown", function(e) {
+    if (e.key === "Enter") {
+        const value = input.value.toLowerCase();
+        input.style.display = "none";
+        textElement.innerHTML = "";
+
+        setTimeout(() => {
+            showResponse();
+        }, 500);
+    }
+});
+
+function showResponse() {
+    const message = `
+Então você quer respostas.
+
+Engraçado.
+A maioria das pessoas diz isso…
+mas poucas estão prontas para ouvir.
+
+Você já percebeu como vive no automático?
+Como responde, age e continua,
+mesmo quando algo dentro de você pede pausa?
+
+Não é culpa sua.
+Ninguém ensina a perceber quando começa a se perder.
+
+Mas algo em você sentiu que devia estar aqui.
+E isso não acontece por acaso.
+
+A pergunta agora não é “por quê”.
+É:
+
+quanto de você ainda está prestando atenção?
+
+`;
+
+    let i = 0;
+    function typeMessage() {
+        if (i < message.length) {
+            textElement.innerHTML += message.charAt(i);
+            i++;
+            setTimeout(typeMessage, 35);
+        }
+    }
+    typeMessage();
+}
+</script>
+
+</body>
+</html>
