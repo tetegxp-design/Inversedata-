@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Você lembra?</title>
+
+<style>
+body {
+    background: radial-gradient(circle, #0b0b0b, #000);
+    color: #e5e5e5;
+    font-family: "Courier New", monospace;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container {
+    width: 80%;
+    max-width: 720px;
+    text-align: center;
+}
+
+#text {
+    font-size: 18px;
+    line-height: 1.7;
+    min-height: 160px;
+}
+
+button {
+    background: transparent;
+    border: 1px solid #666;
+    color: #fff;
+    padding: 10px 25px;
+    margin: 10px;
+    cursor: pointer;
+    font-family: monospace;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #222;
+}
+
+.fade {
+    opacity: 0;
+    transition: opacity 2s;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+    <div id="text"></div>
+    <div id="buttons"></div>
+</div>
+
+<script>
+const text = document.getElementById("text");
+const buttons = document.getElementById("buttons");
+
+let step = 0;
+
+const scenes = [
+    {
+        text: "Você tem certeza de que lembra de tudo?",
+        buttons: ["Sim", "Não sei"]
+    },
+    {
+        text: "Engraçado… quase todo mundo responde isso.",
+        buttons: ["Por quê?", "O que você quer dizer?"]
+    },
+    {
+        text: "Memórias não desaparecem. Elas mudam de lugar.",
+        buttons: ["Como assim?", "Isso não faz sentido"]
+    },
+    {
+        text: "Algumas partes de você aprenderam a ficar quietas para sobreviver.",
+        buttons: ["Que partes?", "Isso é mentira"]
+    },
+    {
+        text: "Talvez as partes que você finge não ouvir.",
+        buttons: ["…", "Eu não finjo"]
+    },
+    {
+        text: "Você tem certeza?",
+        buttons: ["Sim", "Não"]
+    },
+    {
+        text: "Então me responde uma última coisa.",
+        buttons: ["…"]
+    },
+    {
+        text: "Se ninguém estivesse olhando… você seria a mesma pessoa?",
+        buttons: []
+    }
+];
+
+function showScene() {
+    text.innerHTML = "";
+    buttons.innerHTML = "";
+
+    let i = 0;
+    const message = scenes[step].text;
+
+    function type() {
+        if (i < message.length) {
+            text.innerHTML += message.charAt(i);
+            i++;
+            setTimeout(type, 35);
+        }
+    }
+    type();
+
+    setTimeout(() => {
+        scenes[step].buttons.forEach(btn => {
+            const b = document.createElement("button");
+            b.textContent = btn;
+            b.onclick = next;
+            buttons.appendChild(b);
+        });
+    }, message.length * 35 + 500);
+}
+
+function next() {
+    step++;
+    if (step < scenes.length) {
+        showScene();
+    } else {
+        text.innerHTML = "";
+        buttons.innerHTML = "";
+        setTimeout(() => {
+            text.innerHTML = "Algumas respostas você não diz em voz alta.";
+        }, 1000);
+    }
+}
+
+showScene();
+</script>
+
+</body>
+</html>
