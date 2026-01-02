@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Não somos exceção</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #3a0000, #0a0000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Georgia", serif;
+    color: #f2e6e6;
+    overflow: hidden;
+}
+
+#container {
+    max-width: 800px;
+    padding: 40px;
+    text-align: center;
+}
+
+#text {
+    font-size: 22px;
+    line-height: 2;
+    letter-spacing: 0.5px;
+    text-shadow: 0 0 12px rgba(150, 0, 0, 0.5);
+    min-height: 240px;
+    opacity: 1;
+    transition: opacity 1.5s;
+}
+
+.fade {
+    opacity: 0;
+}
+</style>
+</head>
+
+<body>
+
+<div id="container">
+    <div id="text"></div>
+</div>
+
+<script>
+const textEl = document.getElementById("text");
+
+const paragraphs = [
+    "Nós gostamos de acreditar que somos diferentes.",
+    "Que as nossas intenções nos absolvem.",
+    "Que o que fazemos é justificável porque sentimos demais, ou porque sofremos demais.",
+    "Mas a verdade é menos confortável.",
+    "",
+    "Somos falhos.",
+    "Profundamente.",
+    "",
+    "Machucamos pessoas enquanto nos convencemos de que não havia outra escolha.",
+    "Ignoramos consequências porque elas não caem imediatamente sobre nós.",
+    "Chamamos de necessidade aquilo que, no fundo, é egoísmo.",
+    "",
+    "Toda escolha é um corte.",
+    "Mesmo quando é silenciosa.",
+    "Mesmo quando ninguém vê.",
+    "",
+    "E quase sempre…",
+    "alguém sangra longe o bastante para fingirmos que não fomos nós.",
+    "",
+    "O mundo não é cruel por acaso.",
+    "Ele apenas responde.",
+    "",
+    "E você não é exceção."
+];
+
+let p = 0;
+let char = 0;
+
+function typeParagraph() {
+    if (p >= paragraphs.length) return;
+
+    const current = paragraphs[p];
+
+    if (char < current.length) {
+        textEl.innerHTML += current.charAt(char);
+        char++;
+        setTimeout(typeParagraph, 45);
+    } else {
+        textEl.innerHTML += "<br><br>";
+        char = 0;
+        p++;
+        setTimeout(typeParagraph, 1200);
+    }
+}
+
+typeParagraph();
+</script>
+
+</body>
+</html>
