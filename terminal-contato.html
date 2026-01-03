@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>CONTATO</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: radial-gradient(circle at center, #2b0000, #0b0000);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Courier New", monospace;
+}
+
+#terminal {
+    width: 80%;
+    max-width: 900px;
+    min-height: 420px;
+    padding: 30px;
+    background: rgba(20, 0, 0, 0.85);
+    border: 2px solid #7a0000;
+    box-shadow:
+        0 0 25px rgba(120, 0, 0, 0.6),
+        inset 0 0 30px rgba(80, 0, 0, 0.6);
+}
+
+#text {
+    color: #c20000;
+    font-size: 20px;
+    line-height: 1.9;
+    text-shadow: 0 0 8px rgba(180, 0, 0, 0.7);
+    white-space: pre-wrap;
+}
+</style>
+</head>
+
+<body>
+
+<div id="terminal">
+    <div id="text"></div>
+</div>
+
+<script>
+const textEl = document.getElementById("text");
+
+const content = `
+E se você se tornasse o monstro e jogasse fora essa culpa
+Isso te tornaria mais forte?
+Isso manteria os seus erros no passado?
+
+Você é apenas um homem.
+Mas quando um cometa se torna um meteoro?
+Quando é que uma vela se torna uma chama?
+Quando um homem se torna um monstro?
+
+Eu vejo mentiras, manipulação
+Vejo o egoísmo e a traição andando lado a lado.
+
+Eu te diria para manter seus amigos por perto
+e seus inimigos mais perto ainda
+(nunca se sabe em quem você pode confiar)
+
+Mas você é só um homem
+`;
+
+let index = 0;
+
+function typeText() {
+    if (index < content.length) {
+        textEl.innerHTML += content.charAt(index);
+        index++;
+        setTimeout(typeText, 45);
+    }
+}
+
+typeText();
+</script>
+
+</body>
+</html>
