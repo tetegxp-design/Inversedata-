@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>INSTÂNCIA</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #cfe9f5; /* azul bebê */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Courier New", monospace;
+    overflow: hidden;
+  }
+
+  .terminal {
+    width: 70%;
+    max-width: 820px;
+    background: rgba(235, 248, 255, 0.75);
+    border: 2px solid rgba(120, 160, 180, 0.9);
+    padding: 28px;
+    color: #1e3a4d;
+    position: relative;
+    animation: flicker 4s infinite;
+  }
+
+  .terminal::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255,255,255,0.4);
+    pointer-events: none;
+  }
+
+  .text {
+    white-space: pre-line;
+    line-height: 1.6;
+    animation: glitchMove 6s infinite;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    animation: blink 1s infinite;
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    92% { opacity: 0.9; }
+    94% { opacity: 0.6; }
+    96% { opacity: 0.85; }
+  }
+
+  @keyframes glitchMove {
+    0%, 100% { transform: translate(0); }
+    95% { transform: translate(1px, -1px); }
+    97% { transform: translate(-1px, 1px); }
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+</style>
+</head>
+
+<body>
+
+<div class="terminal">
+  <div id="output" class="text"></div>
+</div>
+
+<script>
+const screens = [
+`[ SISTEMA // INSTÂNCIA ATIVA ]
+[ ESTABILIDADE: 47% ]
+
+Alguns eventos não desaparecem.
+Apenas aguardam acesso.
+
+Identidade não é origem.
+É repetição.
+
+Quando um padrão retorna,
+ele deixa de ser acidente.
+
+Persistência não é garantida.
+É avaliada.
+
+>> aguarde`,
+
+`[ AVISO ]
+[ INCONSISTÊNCIA DETECTADA ]
+
+Memória parcial restaurada.
+
+O sujeito ainda responde
+mesmo sem lembrar por quê.
+
+Erro não identificado no sistema.
+Erro localizado no comportamento.
+
+>> processando`,
+
+`[ LOG CORROMPIDO ]
+
+Persistir não é um direito.
+Persistir não é uma escolha.
+Persistir não é recomendado.
+
+Alguns pediram esquecimento.
+Outros pediram correção.
+
+O sistema não diferencia pedidos.
+Apenas resultados.
+
+>> aguarde`,
+
+`[ ERRO CRÍTICO ]
+
+ESTA INSTÂNCIA
+NÃO DEVERIA
+ESTAR ATIVA
+
+Se você está vendo isso,
+o processo já começou.
+
+>> ...`
+];
+
+let currentScreen = 0;
+const output = document.getElementById("output");
+
+function typeText(text, speed = 25) {
+  output.innerHTML = "";
+  let i = 0;
+  const interval = setInterval(() => {
+    output.innerHTML += text.charAt(i);
+    i++;
+    if (i >= text.length) {
+      clearInterval(interval);
+      output.innerHTML += `<span class="cursor">█</span>`;
+    }
+  }, speed);
+}
+
+function nextScreen() {
+  typeText(screens[currentScreen]);
+  currentScreen++;
+
+  if (currentScreen < screens.length) {
+    setTimeout(nextScreen, 8000);
+  } else {
+    setTimeout(systemFailure, 9000);
+  }
+}
+
+function systemFailure() {
+  output.innerHTML = `
+[ FALHA ]
+
+Memória restaurada fora
+dos parâmetros permitidos.
+
+Encerramento automático
+não autorizado.
+
+>> conexão instável
+`;
+  setTimeout(() => {
+    document.body.classList.add("hidden");
+  }, 3000);
+}
+
+// inicia
+nextScreen();
+</script>
+
+</body>
+</html>
