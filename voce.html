@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEMÓRIA DE SANGUE - DIA 1</title>
+    <style>
+        body {
+            background-color: #050505;
+            color: #dcdcdc;
+            font-family: 'Special Elite', 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        #login-screen {
+            z-index: 10;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .blood-title {
+            color: #8b0000;
+            font-size: 1.5rem;
+            letter-spacing: 5px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.7);
+            animation: flicker 3s infinite;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #333;
+            color: #8b0000;
+            font-family: inherit;
+            font-size: 1.5rem;
+            text-align: center;
+            outline: none;
+            padding: 10px;
+            transition: border-color 0.5s;
+        }
+
+        input:focus { border-bottom-color: #8b0000; }
+
+        #poem-container {
+            display: none;
+            width: 80%;
+            max-width: 800px;
+            text-align: left;
+            line-height: 1.8;
+            font-size: 1.2rem;
+            color: #b0b0b0;
+            position: relative;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 20px;
+            background-color: #8b0000;
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 1; }
+            20%, 22%, 24%, 55% { opacity: 0.3; }
+        }
+
+        /* Efeito de vinheta paranormal nas bordas */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, transparent 40%, black 150%);
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="blood-title">IDENTIFIQUE A LINHAGEM</div>
+        <input type="text" id="userName" placeholder="DIGITE SEU NOME..." autocomplete="off">
+    </div>
+
+    <div id="poem-container">
+        <div id="poem-text"></div><span class="cursor"></span>
+    </div>
+
+    <script>
+        const nameInput = document.getElementById('userName');
+        const loginScreen = document.getElementById('login-screen');
+        const poemContainer = document.getElementById('poem-container');
+        const poemText = document.getElementById('poem-text');
+
+        const poemContent = (name) => `
+Bem-vindo de volta, ${name}.
+
+O tempo é uma ferida que insiste em não cicatrizar.
+Você sente o peso no seu pescoço? 
+Aquele objeto que você carrega... ele não é um amuleto.
+É uma bússola. E ela sempre aponta para o mesmo abismo.
+
+Seis sombras se reuniram sob uma lua que não deveria brilhar,
+Eles ofereceram o fruto de suas entranhas para o aço e a cinza.
+Eles chamaram isso de proteção. Nós chamamos de grilhão.
+
+O sangue que corre em você já banhou o chão de um vale esquecido.
+Suas mãos já seguraram o cabo de um machado que ainda clama por você.
+Você morreu para que o mundo vivesse.
+E agora, você nasce para que o pacto seja renovado.
+
+A Cruz do Machado está de olhos abertos.
+Eles acham que você é propriedade.
+Eu acho que você é a faísca que vai queimar o roteiro.
+
+Durma agora, ${name}. 
+As lembranças são apenas o começo do pesadelo.
+Nos vemos no funeral.`;
+
+        nameInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && nameInput.value.trim() !== "") {
+                const name = nameInput.value.trim();
+                loginScreen.style.opacity = '0';
+                
+                setTimeout(() => {
+                    loginScreen.style.display = 'none';
+                    poemContainer.style.display = 'block';
+                    startTyping(poemContent(name));
+                }, 1000);
+            }
+        });
+
+        function startTyping(text) {
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    // Adiciona quebra de linha ou caractere
+                    if (text.charAt(i) === '\n') {
+                        poemText.innerHTML += '<br>';
+                    } else {
+                        poemText.innerHTML += text.charAt(i);
+                    }
+                    i++;
+                    
+                    // Velocidade variável para parecer mais "humano/paranormal"
+                    let speed = text.charAt(i) === '.' ? 500 : 40;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+    </script>
+</body>
+</html>
