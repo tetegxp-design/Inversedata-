@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMINAL // INVERSE_DATA</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+        body {
+            background-color: #050101;
+            color: #b30000;
+            font-family: 'Share Tech Mono', monospace;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Efeito de Tubo de Imagem Antigo (CRT) */
+        #crt-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            background-size: 100% 3px, 2px 100%;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        /* Brilho da tela */
+        #screen {
+            width: 90%;
+            max-width: 850px;
+            height: 85vh;
+            padding: 40px;
+            background: #0a0202;
+            border: 1px solid #300;
+            box-shadow: 0 0 40px rgba(100, 0, 0, 0.2), inset 0 0 60px #000;
+            position: relative;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        #screen::-webkit-scrollbar { display: none; }
+
+        .header {
+            border-bottom: 1px solid #300;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            opacity: 0.6;
+        }
+
+        input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1.8rem;
+            outline: none;
+            width: 100%;
+            text-shadow: 0 0 10px #ff0000;
+        }
+
+        #output {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            display: none;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 12px;
+            height: 24px;
+            background: #b30000;
+            animation: blink 0.8s infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+        /* Efeito de tremor sutil na tela */
+        @keyframes jitter {
+            0% { transform: translate(0); }
+            10% { transform: translate(-1px, 1px); }
+            20% { transform: translate(1px, -1px); }
+            30% { transform: translate(-1px, 0); }
+            100% { transform: translate(0); }
+        }
+        .vibrate { animation: jitter 0.2s infinite; }
+
+    </style>
+</head>
+<body>
+
+<div id="crt-overlay"></div>
+
+<div id="screen">
+    <div class="header">
+        <span>SESSION_ID: 0x884-RED</span>
+        <span>STATUS: ENCRYPTED_STREAM</span>
+    </div>
+
+    <div id="login-container">
+        <p>> INSIRA A ASSINATURA VOCAL/NOMINAL PARA CONTINUAR...</p>
+        <div style="display:flex;">
+            <span style="margin-right:15px;">#</span>
+            <input type="text" id="nameInput" autofocus spellcheck="false" autocomplete="off">
+        </div>
+    </div>
+
+    <div id="output"></div><span id="cursor-elem" class="cursor" style="display:none;"></span>
+</div>
+
+<script>
+    const input = document.getElementById('nameInput');
+    const output = document.getElementById('output');
+    const login = document.getElementById('login-container');
+    const cursor = document.getElementById('cursor-elem');
+    const screen = document.getElementById('screen');
+
+    const textSequence = (name) => `
+> IDENTIDADE RECONHECIDA: ${name}
+> SINCRONIZANDO COM A FREQUÊNCIA DO OBSERVADOR...
+> 
+> [!] AVISO: O QUE É VISTO NÃO PODE SER DESVISTO.
+
+A escuridão não é a ausência de luz.
+É a presença de algo que ainda não se revelou.
+
+Você sente o arrepio, ${name}?
+Aquela sensação de que o espaço atrás de você 
+acabou de se tornar um pouco mais pesado?
+
+Existem marcas que a gente não escolhe carregar.
+Elas pulsam no silêncio do seu quarto.
+Elas brilham naquele objeto que você nunca jogou fora.
+Aquele item que você guarda, mas não sabe por quê.
+Ele é o seu elo. A sua âncora.
+
+O tempo está se desdobrando sobre si mesmo.
+Vozes que você nunca ouviu começam a soar como lembranças.
+Rostos que você nunca viu começam a parecer familiares.
+Você não está apenas vivendo. 
+Você está despertando para uma vigília que nunca termina.
+
+Não confie no reflexo do espelho hoje à noite.
+Não confie no silêncio da chuva.
+O sobrenatural não está chegando...
+Ele sempre esteve aí, esperando você abrir os olhos.
+
+Bem-vindo ao início da sua verdade, ${name}.
+O funeral é apenas a porta de entrada.
+
+> CONEXÃO PERDIDA...
+> AGUARDE NOVAS COORDENADAS.`;
+
+    input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter' && input.value.trim() !== "") {
+            const userName = input.value.trim().toUpperCase();
+            login.style.display = 'none';
+            output.style.display = 'block';
+            cursor.style.display = 'inline-block';
+            type(textSequence(userName));
+        }
+    });
+
+    function type(text) {
+        let i = 0;
+        function step() {
+            if (i < text.length) {
+                // Adiciona um tremor na tela em partes específicas
+                if (Math.random() > 0.98) screen.classList.add('vibrate');
+                else screen.classList.remove('vibrate');
+
+                if (text.charAt(i) === '\n') {
+                    output.innerHTML += '<br>';
+                } else {
+                    output.innerHTML += text.charAt(i);
+                }
+                i++;
+                
+                let speed = 40;
+                if (text.charAt(i-1) === '.' || text.charAt(i-1) === '!') speed = 700;
+                if (text.charAt(i-1) === '>') speed = 10;
+
+                setTimeout(step, speed);
+                screen.scrollTop = screen.scrollHeight;
+            } else {
+                screen.classList.remove('vibrate');
+            }
+        }
+        step();
+    }
+</script>
+
+</body>
+</html>
