@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SISTEMA PRISMA // Terminal Tático Unificado</title>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@500;700;900&display=swap');
+
+    :root {
+        --cyan: #00ffcc;
+        --cyan-glow: rgba(0, 255, 204, 0.4);
+        --pink: #ff0055;
+        --pink-glow: rgba(255, 0, 85, 0.4);
+        --bg-dark: #05080e;
+        --panel-bg: rgba(10, 16, 26, 0.92);
+        --border-color: rgba(0, 255, 204, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+        background-color: var(--bg-dark);
+        color: var(--cyan);
+        font-family: 'Share Tech Mono', monospace;
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-image: 
+            radial-gradient(rgba(0, 255, 204, 0.08) 1px, transparent 0),
+            linear-gradient(to bottom, rgba(5, 8, 14, 0.8), rgba(5, 8, 14, 0.95));
+        background-size: 30px 30px, 100% 100%;
+        background-attachment: fixed;
+    }
+
+    /* Efeito de Scanline CRT */
+    body::before {
+        content: " ";
+        display: block;
+        position: fixed;
+        top: 0; left: 0; bottom: 0; right: 0;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+        background-size: 100% 4px;
+        z-index: 100;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 25px;
+        width: 100%;
+        max-width: 950px;
+    }
+
+    .system-status {
+        font-size: 0.75rem;
+        color: var(--pink);
+        letter-spacing: 3px;
+        margin-bottom: 5px;
+        text-shadow: 0 0 5px var(--pink-glow);
+    }
+
+    h1 {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.2rem;
+        color: #fff;
+        text-shadow: 0 0 12px var(--cyan), 0 0 25px var(--cyan-glow);
+        letter-spacing: 3px;
+    }
+
+    .subtitle { 
+        color: var(--cyan); 
+        font-size: 0.85rem; 
+        letter-spacing: 2px; 
+        margin-top: 5px;
+        opacity: 0.8;
+    }
+
+    .sheet-container {
+        width: 100%;
+        max-width: 950px;
+        border: 1px solid var(--cyan);
+        background-color: var(--panel-bg);
+        padding: 25px;
+        box-shadow: 0 0 30px rgba(0, 255, 204, 0.1), inset 0 0 15px rgba(0, 255, 204, 0.05);
+        position: relative;
+        backdrop-filter: blur(5px);
+    }
+
+    /* Cantos HUD Cyberpunk */
+    .sheet-container::before {
+        content: ""; position: absolute; top: -6px; left: -6px; width: 18px; height: 18px;
+        border-top: 3px solid var(--pink); border-left: 3px solid var(--pink);
+        filter: drop-shadow(0 0 5px var(--pink));
+    }
+    .sheet-container::after {
+        content: ""; position: absolute; bottom: -6px; right: -6px; width: 18px; height: 18px;
+        border-bottom: 3px solid var(--pink); border-right: 3px solid var(--pink);
+        filter: drop-shadow(0 0 5px var(--pink));
+    }
+
+    /* Cabeçalho de Identificação */
+    .id-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+        gap: 12px;
+        margin-bottom: 25px;
+        background: rgba(0, 255, 204, 0.02);
+        padding: 15px;
+        border: 1px solid var(--border-color);
+    }
+
+    .field { display: flex; flex-direction: column; gap: 4px; }
+    .field label { color: var(--pink); font-size: 0.7rem; font-weight: bold; letter-spacing: 1px; }
+    
+    input[type="text"], input[type="number"] {
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--border-color);
+        color: #fff;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.95rem;
+        padding: 6px 10px;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    input[type="text"]:focus, input[type="number"]:focus, textarea:focus {
+        border-color: var(--cyan);
+        box-shadow: 0 0 8px var(--cyan-glow);
+        background: rgba(0, 255, 204, 0.08);
+    }
+
+    /* Grid do Conteúdo */
+    .main-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+    }
+
+    .section-box {
+        border: 1px solid var(--border-color);
+        padding: 15px;
+        margin-bottom: 20px;
+        background: rgba(5, 8, 14, 0.75);
+        position: relative;
+    }
+
+    .section-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.85rem;
+        color: var(--bg-dark);
+        background: var(--cyan);
+        padding: 3px 10px;
+        margin-top: -24px;
+        margin-bottom: 15px;
+        display: inline-block;
+        letter-spacing: 1.5px;
+        font-weight: bold;
+        box-shadow: 0 0 8px var(--cyan-glow);
+    }
+
+    /* Estilo de Linha de Atributos e Perícias com Entradas Numéricas */
+    .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+        border-bottom: 1px dotted rgba(0, 255, 204, 0.15);
+        padding-bottom: 4px;
+    }
+
+    .stat-name { color: #e0e0e0; font-size: 0.9rem; }
+
+    .stat-input {
+        width: 55px;
+        text-align: center;
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--cyan);
+        border: 1px solid var(--cyan);
+        background: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Textareas */
+    textarea {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        border: 1px solid var(--border-color);
+        color: #fff;
+        font-family: 'Share Tech Mono', monospace;
+        font-size: 0.85rem;
+        padding: 8px;
+        resize: vertical;
+        outline: none;
+        transition: all 0.2s ease;
+    }
+
+    /* Barras de Biometria / Recursos */
+    .resource-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 8px;
+    }
+
+    .resource-box {
+        border: 1px solid var(--border-color);
+        padding: 8px;
+        background: rgba(0,0,0,0.4);
+        text-align: center;
+    }
+
+    .resource-box label {
+        display: block;
+        font-size: 0.75rem;
+        color: var(--pink);
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .resource-inputs {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+    }
+
+    .resource-inputs input {
+        width: 45px;
+        text-align: center;
+    }
+
+    /* Rodapé & Controles */
+    .footer-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px dashed var(--border-color);
+    }
+
+    .clear-btn {
+        background: transparent;
+        border: 1px solid var(--pink);
+        color: var(--pink);
+        font-family: 'Orbitron', sans-serif;
+        font-size: 0.7rem;
+        padding: 6px 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .clear-btn:hover {
+        background: var(--pink);
+        color: #fff;
+        box-shadow: 0 0 10px var(--pink);
+    }
+
+    .save-indicator {
+        font-size: 0.75rem;
+        color: var(--cyan);
+        text-shadow: 0 0 5px var(--cyan-glow);
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="system-status">// CONEXÃO SEGURA COM A REDE PRISMA // ZUL'THERON HUB</div>
+    <h1>TERMINAL TÁTICO UNIFICADO</h1>
+    <div class="subtitle">[ FICHA UNIVERSAL DE PERSONAGEM - QUALQUER RAÇA / PLAYER ]</div>
+</header>
+
+<div class="sheet-container">
+    
+    <!-- IDENTIFICAÇÃO DO JOGADOR / PERSONAGEM -->
+    <div class="id-grid">
+        <div class="field"><label>NOME DO PERSONAGEM:</label><input type="text" id="p-name" oninput="saveData()"></div>
+        <div class="field"><label>JOGADOR(A):</label><input type="text" id="p-player" oninput="saveData()"></div>
+        <div class="field"><label>RAÇA / ESPÉCIE:</label><input type="text" id="p-race" placeholder="Ex: Vornak, Humano, Sylphid..." oninput="saveData()"></div>
+        <div class="field"><label>PLANETA DE ORIGEM:</label><input type="text" id="p-origin" placeholder="Ex: Zul'Theron, Terra..." oninput="saveData()"></div>
+        <div class="field" style="grid-column: span 2;"><label>FUNÇÃO / CLASSE NA TRIPULAÇÃO:</label><input type="text" placeholder="Ex: Piloto, Hacker, Mercenário, Místico..." id="p-role" oninput="saveData()"></div>
+    </div>
+
+    <div class="main-grid">
+        
+        <!-- COLUNA 1: ATRIBUTOS, BIOMETRIA & PODERES -->
+        <div>
+            <!-- ATRIBUTOS -->
+            <div class="section-box">
+                <div class="section-title">01. MATRIZ DE ATRIBUTOS</div>
+                
+                <strong style="color:var(--pink); font-size:0.75rem; letter-spacing:1px; display:block; margin-bottom:6px;">ATRIBUTOS FÍSICOS</strong>
+                <div class="stat-row"><span class="stat-name">Força</span><input type="number" id="attr-str" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Destreza</span><input type="number" id="attr-dex" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Vigor</span><input type="number" id="attr-vig" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+
+                <strong style="color:var(--pink); font-size:0.75rem; letter-spacing:1px; margin-top:12px; display:block; margin-bottom:6px;">ATRIBUTOS SOCIAIS</strong>
+                <div class="stat-row"><span class="stat-name">Carisma</span><input type="number" id="attr-cha" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Manipulação</span><input type="number" id="attr-man" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Autocontrole</span><input type="number" id="attr-con" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+
+                <strong style="color:var(--pink); font-size:0.75rem; letter-spacing:1px; margin-top:12px; display:block; margin-bottom:6px;">ATRIBUTOS MENTAIS</strong>
+                <div class="stat-row"><span class="stat-name">Intelecto</span><input type="number" id="attr-int" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Raciocínio</span><input type="number" id="attr-wits" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Percepção</span><input type="number" id="attr-per" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+            </div>
+
+            <!-- BIOMETRIA & VITALIDADE -->
+            <div class="section-box">
+                <div class="section-title">02. VITALIDADE & ENERGIA</div>
+                
+                <div class="resource-grid">
+                    <div class="resource-box">
+                        <label>VITALIDADE (HP)</label>
+                        <div class="resource-inputs">
+                            <input type="number" id="hp-cur" placeholder="Atual" oninput="saveData()">
+                            <span>/</span>
+                            <input type="number" id="hp-max" placeholder="Máx" oninput="saveData()">
+                        </div>
+                    </div>
+                    <div class="resource-box">
+                        <label>ENERGIA PRISMA</label>
+                        <div class="resource-inputs">
+                            <input type="number" id="prisma-cur" placeholder="Atual" oninput="saveData()">
+                            <span>/</span>
+                            <input type="number" id="prisma-max" placeholder="Máx" oninput="saveData()">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-row" style="margin-top: 15px;">
+                    <span class="stat-name">SINCRO-MENTAL (SANIDADE)</span>
+                    <input type="number" id="san-val" class="stat-input" min="0" max="100" value="100" oninput="saveData()">
+                </div>
+            </div>
+
+            <!-- PODERES & TRAÇOS RACIAIS -->
+            <div class="section-box">
+                <div class="section-title">03. PODERES & TRAÇOS RACIAIS</div>
+                <div class="field" style="margin-bottom: 6px;">
+                    <label>PODER / IMPLANTE 1:</label>
+                    <input type="text" id="p-power1" oninput="saveData()">
+                </div>
+                <textarea id="p-power1-desc" placeholder="Efeitos e detalhes do poder 1..." style="height:45px;" oninput="saveData()"></textarea>
+
+                <div class="field" style="margin-top: 8px; margin-bottom: 6px;">
+                    <label>PODER / IMPLANTE 2:</label>
+                    <input type="text" id="p-power2" oninput="saveData()">
+                </div>
+                <textarea id="p-power2-desc" placeholder="Efeitos e detalhes do poder 2..." style="height:45px;" oninput="saveData()"></textarea>
+
+                <div class="field" style="margin-top: 8px; margin-bottom: 6px;">
+                    <label>HABILIDADE PASSIVA RACIAL:</label>
+                    <input type="text" id="p-trait" placeholder="Vantagem nativa da sua raça..." oninput="saveData()">
+                </div>
+            </div>
+        </div>
+
+        <!-- COLUNA 2: PERÍCIAS & INVENTÁRIO -->
+        <div>
+            <!-- PERÍCIAS -->
+            <div class="section-box">
+                <div class="section-title">04. PERÍCIAS & HABILIDADES</div>
+                <div class="stat-row"><span class="stat-name">Prontidão / Reflexos</span><input type="number" id="sk-alert" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Pilotagem de Naves</span><input type="number" id="sk-pilot" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Mira / Armas de Fogo</span><input type="number" id="sk-shoot" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Briga / Luta Corporal</span><input type="number" id="sk-fight" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Hacking / Computação</span><input type="number" id="sk-hack" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Engenharia / Reparos</span><input type="number" id="sk-eng" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Furtividade</span><input type="number" id="sk-stealth" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Lábia / Intimidação</span><input type="number" id="sk-talk" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Medicina / Bio-Alien</span><input type="number" id="sk-med" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Sobrevivência Urbana</span><input type="number" id="sk-surv" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Cultura Galáctica</span><input type="number" id="sk-cult" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+                <div class="stat-row"><span class="stat-name">Segurança / Travas</span><input type="number" id="sk-lock" class="stat-input" min="0" max="10" value="0" oninput="saveData()"></div>
+            </div>
+
+            <!-- ARSENAL & CRÉDITOS -->
+            <div class="section-box">
+                <div class="section-title">05. ARSENAL & EQUIPAMENTO</div>
+                <div class="field" style="margin-bottom: 6px;">
+                    <label>ARMA PRIMÁRIA:</label>
+                    <input type="text" id="p-wep1" placeholder="Ex: Blaster de Plasma (Dano: +4)" oninput="saveData()">
+                </div>
+                <div class="field" style="margin-bottom: 6px;">
+                    <label>ARMA SECUNDÁRIA / ESCUDO:</label>
+                    <input type="text" id="p-wep2" placeholder="Ex: Faca de Monofilamento" oninput="saveData()">
+                </div>
+                <div class="field" style="margin-bottom: 8px;">
+                    <label>CRÉDITOS FLÚIDOS:</label>
+                    <input type="text" id="p-credits" placeholder="₡ 0,00" oninput="saveData()">
+                </div>
+                <label style="color:var(--pink); font-size:0.7rem; font-weight:bold; margin-top:6px; display:block;">INVENTÁRIO DE CAMPO:</label>
+                <textarea id="p-inventory" placeholder="Itens, ferramentas, bio-chips, munição..." style="height:65px;" oninput="saveData()"></textarea>
+            </div>
+
+            <!-- REGISTRO DE CAMPO -->
+            <div class="section-box">
+                <div class="section-title">06. NOTAS & HISTÓRICO</div>
+                <textarea id="p-notes" placeholder="Segredos do passado, contatos em Zul'Theron, dívidas de jogo..." style="height:90px;" oninput="saveData()"></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- RODAPÉ & CONTROLES -->
+    <div class="footer-bar">
+        <button class="clear-btn" onclick="clearSheet()">[!] LIMPAR DADOS DA FICHA</button>
+        <div class="save-indicator" id="save-status">● SISTEMA ATIVO // AUTOSAVE OPERACIONAL</div>
+    </div>
+
+</div>
+
+<script>
+    // Salvar todos os campos automaticamente no navegador
+    function saveData() {
+        const data = {};
+        document.querySelectorAll('input, textarea').forEach(input => {
+            if(input.id) data[input.id] = input.value;
+        });
+        localStorage.setItem('prisma_tactical_sheet', JSON.stringify(data));
+        
+        const status = document.getElementById('save-status');
+        status.style.color = '#00ffcc';
+        status.innerText = '● DADOS GRAVADOS NO TERMINAL!';
+        setTimeout(() => {
+            status.innerText = '● SISTEMA ATIVO // AUTOSAVE OPERACIONAL';
+        }, 1200);
+    }
+
+    // Carregar dados salvos ao abrir a página
+    function loadSheetData() {
+        const data = JSON.parse(localStorage.getItem('prisma_tactical_sheet')) || {};
+        document.querySelectorAll('input, textarea').forEach(input => {
+            if(input.id && data[input.id] !== undefined) {
+                input.value = data[input.id];
+            }
+        });
+    }
+
+    // Limpar Ficha
+    function clearSheet() {
+        if(confirm("Tem certeza que deseja apagar todos os dados registrados neste terminal?")) {
+            localStorage.removeItem('prisma_tactical_sheet');
+            document.querySelectorAll('input, textarea').forEach(input => {
+                if(input.type === 'number') input.value = 0;
+                else input.value = '';
+            });
+            saveData();
+        }
+    }
+
+    // Carregar automaticamente na abertura da página
+    loadSheetData();
+</script>
+
+</body>
+</html>
