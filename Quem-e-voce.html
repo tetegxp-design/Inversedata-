@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Terminal Anomalia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #080808;
+      color: #00ff66;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Monitor Container */
+    .setup-container {
+      position: relative;
+      width: 650px;
+    }
+
+    .setup-container img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Tela CRT com Estática */
+    .screen-text {
+      position: absolute;
+      top: 24%;
+      left: 22%;
+      width: 56%;
+      height: 44%;
+      color: #00ff66;
+      font-size: 13px;
+      text-shadow: 0 0 5px #00ff66;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    /* Post-its interativos */
+    .postit {
+      position: absolute;
+      font-weight: bold;
+      color: #111;
+      cursor: pointer;
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      font-size: 13px;
+      transition: transform 0.2s, filter 0.2s;
+      user-select: none;
+    }
+
+    .postit:hover {
+      transform: scale(1.15) rotate(0deg) !important;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+    }
+
+    /* Posições aproximadas dos Post-its */
+    #btn-beatrice { top: 26%; left: 9%;  transform: rotate(-3deg); }
+    #btn-umbra    { top: 41%; left: 10%; transform: rotate(2deg);  }
+    #btn-antoine  { top: 57%; left: 16%; transform: rotate(-4deg); }
+    #btn-kaer     { top: 58%; left: 30%; transform: rotate(3deg);  }
+    #btn-renan    { top: 24%; left: 81%; transform: rotate(4deg);  }
+    #btn-galatea  { top: 40%; left: 80%; transform: rotate(-2deg); }
+
+    /* MODAL DA CARTA */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    /* Animação da Carta se Abrindo */
+    .envelope {
+      width: 450px;
+      background: #e8e2ce;
+      color: #2b261f;
+      padding: 30px;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      font-family: 'Georgia', serif;
+      position: relative;
+      transform: scale(0) rotate(-10deg);
+      opacity: 0;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 2px solid #c5b89a;
+    }
+
+    .modal-overlay.active .envelope {
+      transform: scale(1) rotate(0deg);
+      opacity: 1;
+    }
+
+    .envelope h2 {
+      margin-top: 0;
+      font-size: 20px;
+      border-bottom: 1px solid #a39575;
+      padding-bottom: 8px;
+      color: #4a3b2c;
+    }
+
+    .letter-body {
+      font-size: 15px;
+      line-height: 1.6;
+      min-height: 120px;
+      margin-top: 15px;
+    }
+
+    .cipher-code {
+      display: block;
+      margin-top: 15px;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      font-size: 18px;
+      color: #8b0000;
+      letter-spacing: 2px;
+      text-align: center;
+      background: rgba(0,0,0,0.05);
+      padding: 8px;
+      border: 1px dashed #8b0000;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      background: none; border: none;
+      font-size: 20px; cursor: pointer;
+      color: #8b0000; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="setup-container">
+    <img src="monitor-retro.jpg" alt="Computador CRT">
+
+    <!-- Tela do Computador -->
+    <div class="screen-text">
+      <p>[SISTEMA INTERCEPTADO: ESTAÇÃO ZUL'THERON]</p>
+      <p>&gt; Carregando registros de procurados...</p>
+      <p>&gt; 6 almas detectadas na frequência Prisma.</p>
+      <br>
+      <p style="color: #fff; text-align: center; font-size: 14px;"><b>QUEM SERÍA VOCÊ?</b></p>
+    </div>
+
+    <!-- Post-its com Nomes -->
+    <div class="postit" id="btn-beatrice" onclick="abrirCarta('beatrice')">Beatrice Hale</div>
+    <div class="postit" id="btn-umbra" onclick="abrirCarta('umbra')">Umbra Lyra</div>
+    <div class="postit" id="btn-antoine" onclick="abrirCarta('antoine')">Antoine Laurent</div>
+    <div class="postit" id="btn-kaer" onclick="abrirCarta('kaer')">Ø-Kaer</div>
+    <div class="postit" id="btn-renan" onclick="abrirCarta('renan')">Renan Valente</div>
+    <div class="postit" id="btn-galatea" onclick="abrirCarta('galatea')">Galatea</div>
+  </div>
+
+  <!-- Modal da Carta -->
+  <div class="modal-overlay" id="modal">
+    <div class="envelope">
+      <button class="close-btn" onclick="fecharCarta()">✕</button>
+      <h2 id="carta-titulo">Mensagem Criptografada</h2>
+      <div class="letter-body" id="carta-texto"></div>
+    </div>
+  </div>
+
+  <script>
+    const charadas = {
+      beatrice: {
+        nome: "Beatrice Hale",
+        texto: "Busquei o controle entre ordens e nomes, mas a máscara de vidro que uso não reflete minha verdadeira sombra. O código da minha mente revela quem realmente sou:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      umbra: {
+        nome: "Umbra Lyra",
+        texto: "Naveguei pelas névoas e pela penumbra do silêncio, julgando conhecer a dor dos meus ancestrais. Mas a estática das estrelas sussurra a única verdade oculta:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      antoine: {
+        nome: "Antoine Laurent",
+        texto: "Calculou-se cada passo, cada tática e cada segundo de sobrevivência. Mas nenhuma equação foi capaz de prever o enigma escrito no meu próprio sangue:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      kaer: {
+        nome: "Ø-Kaer",
+        texto: "Entre memórias apagadas e circuitos reconstruídos, procurei a origem da minha diretriz primordial. A resposta decodificada no meu núcleo é:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      renan: {
+        nome: "Renan Valente",
+        texto: "Empunhei a coragem contra o caos e enfrentei a perda sem piscar. Mas a maior batalha é contra a ilusão impressa no meu próprio reflexo:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      galatea: {
+        nome: "Galatea",
+        texto: "Moldada em graciosidade e tecida entre mistérios, acreditei ser a arquiteta do meu próprio destino. A carta dos ancestrais, porém, revela:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      }
+    };
+
+    let typingTimer;
+
+    function abrirCarta(id) {
+      const data = charadas[id];
+      const modal = document.getElementById('modal');
+      const titulo = document.getElementById('carta-titulo');
+      const containerTexto = document.getElementById('carta-texto');
+
+      titulo.innerText = `Carta para ${data.nome}`;
+      containerTexto.innerHTML = "";
+      modal.classList.add('active');
+      modal.style.display = 'flex';
+
+      // Efeito Datilografia
+      let i = 0;
+      clearTimeout(typingTimer);
+      
+      function typeWriter() {
+        if (i < data.texto.length) {
+          containerTexto.innerHTML += data.texto.charAt(i);
+          i++;
+          typingTimer = setTimeout(typeWriter, 30);
+        } else {
+          containerTexto.innerHTML += `<span class="cipher-code">${data.cifra}</span>`;
+        }
+      }
+      typeWriter();
+    }
+
+    function fecharCarta() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      setTimeout(() => { modal.style.display = 'none'; }, 400);
+      clearTimeout(typingTimer);
+    }
+  </script>
+</body>
+</html>
