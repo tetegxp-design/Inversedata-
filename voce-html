@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal Anomalia - Quem Seria Você?</title>
+
+  <!-- Fonte Google para efeito manuscrito nos Post-its -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      background-color: #050505;
+      color: #00ff66;
+      font-family: 'VT323', 'Courier New', monospace;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 10px;
+    }
+
+    /* Container Principal do Monitor */
+    .setup-container {
+      position: relative;
+      width: 100%;
+      max-width: 650px;
+    }
+
+    .setup-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Tela CRT do Monitor */
+    .screen-text {
+      position: absolute;
+      top: 22%;
+      left: 20%;
+      width: 60%;
+      height: 42%;
+      color: #00ff66;
+      font-size: 1.1rem;
+      text-shadow: 0 0 4px #00ff66;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px;
+      line-height: 1.2;
+    }
+
+    /* Estilo dos Post-its Clicáveis */
+    .postit {
+      position: absolute;
+      font-family: 'Permanent Marker', cursive;
+      font-size: 0.85rem;
+      color: #111;
+      background: #ffee75;
+      padding: 6px 10px;
+      border-radius: 2px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+      cursor: pointer;
+      transition: transform 0.2s, filter 0.2s;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .postit:hover {
+      transform: scale(1.15) rotate(0deg) !important;
+      filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
+      z-index: 10;
+    }
+
+    /* Coordenadas ajustadas dos Post-its nas bordas do monitor */
+    #btn-beatrice { top: 22%; left: 2%;  transform: rotate(-4deg); background: #ff758c; }
+    #btn-umbra    { top: 40%; left: 3%;  transform: rotate(3deg);  background: #75cfff; }
+    #btn-antoine  { top: 58%; left: 5%;  transform: rotate(-2deg); background: #75ffb3; }
+    #btn-kaer     { top: 76%; left: 18%; transform: rotate(4deg);  background: #e275ff; }
+    #btn-renan    { top: 22%; right: 2%; transform: rotate(5deg);  background: #ffb875; }
+    #btn-galatea  { top: 40%; right: 3%; transform: rotate(-3deg); background: #ffee75; }
+
+    /* Modal da Carta */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.88);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      padding: 15px;
+    }
+
+    .envelope {
+      width: 100%;
+      max-width: 480px;
+      background: #f4efe1;
+      color: #2b261f;
+      padding: 25px;
+      border-radius: 4px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
+      font-family: 'Georgia', serif;
+      position: relative;
+      transform: scale(0.7);
+      opacity: 0;
+      transition: all 0.4s ease-out;
+      border: 2px solid #c5b89a;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-overlay.active .envelope {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .envelope h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+      border-bottom: 1px solid #a39575;
+      padding-bottom: 8px;
+      color: #4a3b2c;
+    }
+
+    .letter-body {
+      font-size: 1rem;
+      line-height: 1.5;
+      min-height: 100px;
+      margin-top: 15px;
+    }
+
+    .cipher-code {
+      display: block;
+      margin-top: 15px;
+      font-family: 'VT323', monospace;
+      font-weight: bold;
+      font-size: 1.4rem;
+      color: #8b0000;
+      letter-spacing: 3px;
+      text-align: center;
+      background: rgba(0,0,0,0.06);
+      padding: 8px;
+      border: 1px dashed #8b0000;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px; right: 15px;
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer;
+      color: #8b0000; font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="setup-container">
+    <!-- Monitor com Imagem de Fundo Remota -->
+    <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1000&auto=format&fit=crop" alt="Monitor Retro CRT">
+
+    <!-- Conteúdo da Tela CRT -->
+    <div class="screen-text">
+      <p>[SISTEMA INTERCEPTADO: ESTAÇÃO ZUL'THERON]</p>
+      <p>&gt; Carregando registros de procurados...</p>
+      <p>&gt; 6 almas detectadas na frequência Prisma.</p>
+      <p style="color: #fff; font-size: 1.3rem; margin-top: 8px;"><b>QUEM SERÍA VOCÊ?</b></p>
+    </div>
+
+    <!-- Post-its Interativos -->
+    <div class="postit" id="btn-beatrice" onclick="abrirCarta('beatrice')">Beatrice Hale</div>
+    <div class="postit" id="btn-umbra" onclick="abrirCarta('umbra')">Umbra Lyra</div>
+    <div class="postit" id="btn-antoine" onclick="abrirCarta('antoine')">Antoine Laurent</div>
+    <div class="postit" id="btn-kaer" onclick="abrirCarta('kaer')">Ø-Kaer</div>
+    <div class="postit" id="btn-renan" onclick="abrirCarta('renan')">Renan Valente</div>
+    <div class="postit" id="btn-galatea" onclick="abrirCarta('galatea')">Galatea</div>
+  </div>
+
+  <!-- Modal da Carta -->
+  <div class="modal-overlay" id="modal">
+    <div class="envelope">
+      <button class="close-btn" onclick="fecharCarta()">✕</button>
+      <h2 id="carta-titulo">Carta Criptografada</h2>
+      <div class="letter-body" id="carta-texto"></div>
+    </div>
+  </div>
+
+  <script>
+    const charadas = {
+      beatrice: {
+        nome: "Beatrice Hale",
+        texto: "Busquei o controle entre ordens e nomes, mas a máscara de vidro que uso não reflete minha verdadeira sombra. O código da minha mente revela quem realmente sou:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      umbra: {
+        nome: "Umbra Lyra",
+        texto: "Naveguei pelas névoas e pela penumbra do silêncio, julgando conhecer a dor dos meus ancestrais. Mas a estática das estrelas sussurra a única verdade oculta:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      antoine: {
+        nome: "Antoine Laurent",
+        texto: "Calculou-se cada passo, cada tática e cada segundo de sobrevivência. Mas nenhuma equação foi capaz de prever o enigma escrito no meu próprio sangue:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      kaer: {
+        nome: "Ø-Kaer",
+        texto: "Entre memórias apagadas e circuitos reconstruídos, procurei a origem da minha diretriz primordial. A resposta decodificada no meu núcleo é:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      renan: {
+        nome: "Renan Valente",
+        texto: "Empunhei a coragem contra o caos e enfrentei a perda sem piscar. Mas a maior batalha é contra a缝lusão impressa no meu próprio reflexo:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      },
+      galatea: {
+        nome: "Galatea",
+        texto: "Moldada em graciosidade e tecida entre mistérios, acreditei ser a arquiteta do meu próprio destino. A carta dos ancestrais, porém, revela:",
+        cifra: "YUFH QDR H TXHP SHQVD"
+      }
+    };
+
+    let typingTimer;
+
+    function abrirCarta(id) {
+      const data = charadas[id];
+      const modal = document.getElementById('modal');
+      const titulo = document.getElementById('carta-titulo');
+      const containerTexto = document.getElementById('carta-texto');
+
+      titulo.innerText = `Carta Secreta: ${data.nome}`;
+      containerTexto.innerHTML = "";
+      modal.classList.add('active');
+
+      let i = 0;
+      clearTimeout(typingTimer);
+      
+      function typeWriter() {
+        if (i < data.texto.length) {
+          containerTexto.innerHTML += data.texto.charAt(i);
+          i++;
+          typingTimer = setTimeout(typeWriter, 25);
+        } else {
+          containerTexto.innerHTML += `<span class="cipher-code">${data.cifra}</span>`;
+        }
+      }
+      typeWriter();
+    }
+
+    function fecharCarta() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('active');
+      clearTimeout(typingTimer);
+    }
+  </script>
+</body>
+</html>
+      
