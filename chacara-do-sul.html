@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chácara Vale do Sul | Um Refúgio na Natureza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-light: #f3f7f4;
+            --primary-light: #1b4332;
+            --accent-light: #2d6a4f;
+            --card-light: rgba(255, 255, 255, 0.85);
+            --text-light: #081c15;
+            --highlight-light: #d8f3dc;
+
+            --bg-dark: #050505;
+            --primary-dark: #660000;
+            --card-dark: rgba(18, 18, 18, 0.95);
+            --text-dark: #ff2a2a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.2s ease-in-out;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: radial-gradient(#d8f3dc 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        header {
+            width: 100%;
+            padding: 60px 20px 40px;
+            background: linear-gradient(180deg, rgba(27,67,50,0.9) 0%, rgba(45,106,79,0.7) 100%), url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .badge {
+            background: #b7e4c7;
+            color: #1b4332;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        main {
+            max-width: 700px;
+            width: 90%;
+            margin: -30px auto 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        .card {
+            background: var(--card-light);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .card h2 {
+            font-size: 1.3rem;
+            color: var(--primary-light);
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        li {
+            background: var(--highlight-light);
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--primary-light);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(27, 67, 50, 0.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: var(--accent-light);
+        }
+
+        /* Modal / Campo de Nome */
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        input[type="text"] {
+            padding: 16px;
+            border-radius: 12px;
+            border: 2px solid #b7e4c7;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        /* ESTADO SOMBRIO (CORRUPTO) */
+        body.corrupted {
+            background-color: var(--bg-dark) !important;
+            background-image: none !important;
+            color: var(--text-dark) !important;
+        }
+
+        body.corrupted * {
+            font-family: 'Creepster', cursive !important;
+        }
+
+        body.corrupted header {
+            background: #000 !important;
+        }
+
+        body.corrupted .card {
+            background: var(--card-dark) !important;
+            border-color: var(--primary-dark) !important;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+
+        body.corrupted .card h2, body.corrupted p {
+            color: var(--text-dark) !important;
+        }
+
+        body.corrupted li {
+            background: #1a0000 !important;
+            color: #ff4d4d !important;
+            border: 1px solid #660000;
+        }
+
+        body.corrupted .btn {
+            background: var(--primary-dark) !important;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.6) !important;
+        }
+
+        .glitch-flash {
+            animation: glitch 0.1s infinite;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            50% { transform: translate(-3px, 3px); }
+            100% { transform: translate(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <span class="badge" id="badge">✦ Viagem Exclusiva ✦</span>
+        <h1 id="title">Chácara Vale do Sul</h1>
+        <p id="subtitle">Um retiro inesquecível Cercado pela Natureza</p>
+    </header>
+
+    <main>
+        <div class="card" id="main-card">
+            <h2 id="welcome-title">Você e seus Amigos Ganharam!</h2>
+            <p id="welcome-desc">Parabéns! Você foi contemplado com uma estadia totalmente gratuita em nossa chácara para um final de semana inesquecível.</p>
+        </div>
+
+        <div class="card" id="inc-card">
+            <h2>O Pacote Inclui:</h2>
+            <ul>
+                <li>🌲 Chalés Aconchegantes</li>
+                <li>🔥 Fogueira Noturna</li>
+                <li>🏊 Lago de Águas Claras</li>
+                <li>🍃 Trilhas Ecológicas</li>
+            </ul>
+        </div>
+
+        <div class="card" id="items-card">
+            <h2 id="items-title">O que levar na mochila:</h2>
+            <ul id="items-list">
+                <!-- Itens carregados via JS -->
+            </ul>
+        </div>
+
+        <div class="card" id="action-card" style="text-align: center;">
+            <h2 id="footer-msg">Garanta sua Vaga!</h2>
+            <p id="footer-desc">Confirme sua presença para receber o mapa de acesso.</p>
+            
+            <div id="interactive-area">
+                <button class="btn" id="start-btn" onclick="showInput()">CONFIRMAR PRESENÇA</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const normalItems = [
+            "🎒 Mochila de Trilha",
+            "🥾 Botas Confortáveis",
+            "🧴 Repelente de Insetos",
+            "⛺ Barraca de Acampamento",
+            "🔦 Lanterna Portátil"
+        ];
+
+        const corruptedItems = [
+            "✝️ Crucifixo de Madeira",
+            "💧 Água Benta",
+            "📖 Bíblia Sagrada",
+            "🕯️ Velas Brancas",
+            "📿 Terço de Proteção"
+        ];
+
+        const itemsList = document.getElementById('items-list');
+        const body = document.body;
+        let glitchCount = 0;
+
+        function renderItems(items) {
+            itemsList.innerHTML = '';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                itemsList.appendChild(li);
+            });
+        }
+
+        renderItems(normalItems);
+
+        // Dispara o glitch exatamente duas vezes ao longo da página
+        function triggerTemporaryGlitch() {
+            if (glitchCount >= 2) return;
+            glitchCount++;
+
+            body.classList.add('corrupted', 'glitch-flash');
+            renderItems(corruptedItems);
+            
+            document.getElementById('title').textContent = "ACAMPAMENTO DAS SOMBRAS";
+            document.getElementById('welcome-title').textContent = "NÃO HÁ PARA ONDE FUGIR";
+
+            setTimeout(() => {
+                body.classList.remove('corrupted', 'glitch-flash');
+                renderItems(normalItems);
+                
+                document.getElementById('title').textContent = "Chácara Vale do Sul";
+                document.getElementById('welcome-title').textContent = "Você e seus Amigos Ganharam!";
+            }, 700); // Pisca por 0.7 segundos
+        }
+
+        // Agenda as duas piscadas temporizadas
+        setTimeout(triggerTemporaryGlitch, 5000);  // Primeira piscada com 5 segundos
+        setTimeout(triggerTemporaryGlitch, 14000); // Segunda piscada com 14 segundos
+
+        // Etapa de Confirmação de Presença
+        function showInput() {
+            const area = document.getElementById('interactive-area');
+            area.innerHTML = `
+                <div class="input-group">
+                    <input type="text" id="player-name" placeholder="Digite seu nome completo..." />
+                    <button class="btn" onclick="submitName()">ENVIAR CONFIRMAÇÃO</button>
+                </div>
+            `;
+        }
+
+        function submitName() {
+            const nameInput = document.getElementById('player-name').value;
+            if (!nameInput.trim()) return;
+
+            // Ativa versão sombria por 10 segundos
+            body.classList.add('corrupted');
+            renderItems(corruptedItems);
+
+            document.getElementById('title').textContent = "O RITUAL FOI SELADO";
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('inc-card').style.display = 'none';
+            document.getElementById('items-card').style.display = 'none';
+            
+            document.getElementById('action-card').innerHTML = `
+                <h2>AGRADECEMOS POR OFERECER A SUA ALMA, ${nameInput.toUpperCase()}!</h2>
+                <p style="font-size: 1.5rem; margin-top: 15px;">NÃO HÁ VOLTA.</p>
+            `;
+
+            // Espera 10 segundos para voltar para a versão fofa
+            setTimeout(() => {
+                body.classList.remove('corrupted');
+                
+                document.getElementById('title').textContent = "Chácara Vale do Sul";
+                document.getElementById('main-card').style.display = 'block';
+                document.getElementById('inc-card').style.display = 'block';
+                document.getElementById('items-card').style.display = 'block';
+                renderItems(normalItems);
+
+                document.getElementById('action-card').innerHTML = `
+                    <h2 style="color: #2d6a4f;">🎉 Presença Confirmada!</h2>
+                    <p style="font-size: 1.1rem; color: #1b4332; margin-top: 10px;">
+                        Estaremos aguardando você na <strong>Chácara Vale do Sul</strong> para o nosso acampamento! <br>
+                        Mal podemos esperar para te ver. Enviaremos presentes especiais de boas-vindas! 🎁✨
+                    </p>
+                `;
+            }, 10000);
+        }
+    </script>
+</body>
+</html>
