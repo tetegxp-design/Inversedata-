@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chácara Vale do Sol | Promoção Exclusiva</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&family=Creepster&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-normal: #f4f9f4;
+            --primary-normal: #2e7d32;
+            --accent-normal: #81c784;
+            --text-normal: #1b5e20;
+            --card-normal: #ffffff;
+            
+            --bg-dark: #0a0a0a;
+            --primary-dark: #8b0000;
+            --accent-dark: #4a0000;
+            --text-dark: #ff3333;
+            --card-dark: #121212;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.1s, color 0.1s;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-normal);
+            color: var(--text-normal);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, #1b5e20, #4caf50);
+            color: white;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background-color: #ffeb3b;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+        }
+
+        main {
+            max-width: 800px;
+            width: 90%;
+            margin: 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-normal);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            margin-bottom: 15px;
+            color: var(--primary-normal);
+        }
+
+        ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        li {
+            background: #e8f5e9;
+            padding: 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-normal);
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+        }
+
+        /* ESTILO SOMBRIO (CORRUPTO) */
+        body.corrupted {
+            background-color: var(--bg-dark) !important;
+            color: var(--text-dark) !important;
+            font-family: 'Creepster', cursive !important;
+            filter: invert(0.1) hue-rotate(90deg) contrast(1.5);
+        }
+
+        body.corrupted header {
+            background: linear-gradient(135deg, #4a0000, #8b0000) !important;
+        }
+
+        body.corrupted .card {
+            background: var(--card-dark) !important;
+            border-color: var(--primary-dark) !important;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+        }
+
+        body.corrupted .card h2 {
+            color: var(--text-dark) !important;
+        }
+
+        body.corrupted li {
+            background: #2a0000 !important;
+            color: #ff6666 !important;
+            border: 1px solid #8b0000;
+        }
+
+        body.corrupted .btn {
+            background-color: var(--primary-dark) !important;
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.8) !important;
+        }
+
+        /* Animação de Glitch */
+        .glitch-effect {
+            animation: flash 0.15s infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; transform: translate(0); }
+            50% { opacity: 0.8; transform: translate(-2px, 2px); }
+            100% { opacity: 1; transform: translate(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <span class="badge" id="badge">Parabéns! Você foi Selecionado</span>
+        <h1 id="title">Chácara Vale do Sol</h1>
+        <p id="subtitle">Sua experiência inesquecível na natureza começa aqui.</p>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2 id="welcome-title">Você Ganhou uma Viagem Gratuita!</h2>
+            <p id="welcome-desc">Você e seus amigos foram contemplados com um fim de semana exclusivo com tudo pago em nossa chácara de campo.</p>
+        </div>
+
+        <div class="card">
+            <h2>Tudo Incluso no Pacote:</h2>
+            <ul id="inclusions">
+                <li>🌲 Acomodação Completa</li>
+                <li>🔥 Fogueira sob as Estrelas</li>
+                <li>🏊 Acesso ao Lago Privativo</li>
+                <li>🍖 Área de Churrasco</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2 id="items-title">O que Você Deve Levar:</h2>
+            <ul id="items-list">
+                <!-- Preenchido via JS -->
+            </ul>
+        </div>
+
+        <div class="card" style="text-align: center;">
+            <h2 id="footer-msg">🎉 Parabéns e Divirta-se!</h2>
+            <p style="margin-bottom: 20px;">Confirme sua presença abaixo para receber a localização exata.</p>
+            <button class="btn" id="cta-btn">CONFIRMAR PRESENÇA</button>
+        </div>
+    </main>
+
+    <script>
+        // Dados das duas versões do site
+        const normalItems = [
+            "🎒 Mochila de Trilha",
+            "🥾 Botas Confortáveis",
+            "🧴 Repelente de Insetos",
+            "⛺ Barraca de Acampamento",
+            "🔦 Lanterna Portátil"
+        ];
+
+        const corruptedItems = [
+            "✝️ Crucifixo de Madeira",
+            "💧 Água Benta",
+            "📖 Bíblia Sagrada",
+            "🕯️ Velas Brancas",
+            "📿 Terço de Proteção"
+        ];
+
+        const itemsList = document.getElementById('items-list');
+        const body = document.body;
+
+        // Função para carregar itens da lista
+        function renderItems(items) {
+            itemsList.innerHTML = '';
+            items.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                itemsList.appendChild(li);
+            });
+        }
+
+        // Renderização inicial
+        renderItems(normalItems);
+
+        // Função que executa a "falha" (glitch)
+        function triggerGlitch() {
+            // Ativa o estado sombrio
+            body.classList.add('corrupted', 'glitch-effect');
+            renderItems(corruptedItems);
+            
+            document.getElementById('title').textContent = "ACAMPAMENTO DAS SOMBRAS";
+            document.getElementById('welcome-title').textContent = "NÃO HÁ PARA ONDE FUGIR";
+            document.getElementById('footer-msg').textContent = "O RITUAL VAI COMEÇAR";
+
+            // Tempo que o glitch dura (ex: 800 milissegundos = 0.8 segundos)
+            setTimeout(() => {
+                body.classList.remove('corrupted', 'glitch-effect');
+                renderItems(normalItems);
+                
+                document.getElementById('title').textContent = "Chácara Vale do Sol";
+                document.getElementById('welcome-title').textContent = "Você Ganhou uma Viagem Gratuita!";
+                document.getElementById('footer-msg').textContent = "🎉 Parabéns e Divirta-se!";
+            }, 800);
+        }
+
+        // Intervalo aleatório para disparar o glitch (entre 4 a 8 segundos)
+        function startRandomGlitches() {
+            const randomTime = Math.floor(Math.random() * 4000) + 4000;
+            setTimeout(() => {
+                triggerGlitch();
+                startRandomGlitches();
+            }, randomTime);
+        }
+
+        // Inicia o ciclo de glitches
+        startRandomGlitches();
+    </script>
+</body>
+</html>
