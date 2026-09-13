@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chácara Vale do Sul | Seleção Especial</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-forest: #0b1d13;
+            --cream-paper: #f9f6ef;
+            --gold-accent: #d4af37;
+            --gold-dark: #aa820a;
+            --forest-deep: #142e20;
+            --text-dark: #2b2521;
+            --wax-red: #8b1e1e;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at center, #1b3a29 0%, #08140d 100%);
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .envelope-container {
+            perspective: 1000px;
+            width: 100%;
+            max-width: 580px;
+            position: relative;
+        }
+
+        .envelope-card {
+            background: var(--cream-paper);
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(212, 175, 55, 0.2);
+            padding: 40px 35px;
+            border: 2px solid var(--gold-accent);
+            position: relative;
+            background-image: radial-gradient(circle at top left, rgba(212, 175, 55, 0.08), transparent 60%);
+        }
+
+        .wax-seal {
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 30% 30%, #b82b2b, var(--wax-red));
+            border-radius: 50%;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold-accent);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 1.4rem;
+            border: 2px dashed rgba(212, 175, 55, 0.5);
+            z-index: 10;
+        }
+
+        .header-section {
+            text-align: center;
+            margin-top: 15px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 20px;
+        }
+
+        .badge-tag {
+            background: var(--forest-deep);
+            color: var(--gold-accent);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 12px;
+            border: 1px solid var(--gold-accent);
+        }
+
+        h1.title {
+            font-family: 'Cinzel', serif;
+            color: var(--forest-deep);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        p.subtitle {
+            color: #665b55;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Texto explicativo do filme e evento */
+        .story-box {
+            background: rgba(20, 46, 32, 0.05);
+            border-left: 4px solid var(--gold-accent);
+            padding: 18px;
+            border-radius: 0 12px 12px 0;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #3d3531;
+        }
+
+        .story-box strong {
+            color: var(--forest-deep);
+        }
+
+        .input-step {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+        }
+
+        .input-step label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--forest-deep);
+        }
+
+        .input-step input {
+            padding: 16px 20px;
+            border: 2px solid #dcd4c5;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            text-align: center;
+            background: #fff;
+            transition: all 0.3s;
+            font-weight: 600;
+            color: var(--forest-deep);
+        }
+
+        .input-step input:focus {
+            border-color: var(--gold-accent);
+            box-shadow: 0 0 12px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-accent) 0%, var(--gold-dark) 100%);
+            color: #fff;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 6px 18px rgba(170, 130, 10, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(170, 130, 10, 0.5);
+        }
+
+        .reveal-step {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .role-badge {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--gold-dark);
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--gold-accent);
+            padding-bottom: 10px;
+        }
+
+        .greeting {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--forest-deep);
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .description-box {
+            background: rgba(20, 46, 32, 0.04);
+            border-left: 4px solid var(--gold-accent);
+            padding: 16px 18px;
+            border-radius: 0 10px 10px 0;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #3d3531;
+        }
+
+        .instructions-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--forest-deep);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .instructions-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .instructions-list li {
+            background: #ffffff;
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #e2dad0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #2c2520;
+            position: relative;
+            padding-left: 32px;
+        }
+
+        .instructions-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: var(--gold-dark);
+            font-size: 0.8rem;
+        }
+
+        .gift-footer {
+            text-align: center;
+            background: linear-gradient(135deg, var(--forest-deep) 0%, #0d2116 100%);
+            color: var(--cream-paper);
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 0.88rem;
+            border: 1px solid var(--gold-accent);
+            line-height: 1.5;
+        }
+
+        .gift-footer strong {
+            color: var(--gold-accent);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.8s forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="envelope-container">
+        <div class="envelope-card">
+            <div class="wax-seal">VS</div>
+
+            <div class="header-section">
+                <span class="badge-tag">Chácara Vale do Sul</span>
+                <h1 class="title">Edição de Aniversário</h1>
+                <p class="subtitle">Um evento comemorativo inesquecível</p>
+            </div>
+
+            <!-- ETAPA 1: APRESENTAÇÃO E NOME -->
+            <div class="input-step" id="step-1">
+                <div class="story-box">
+                    🎉 <strong>Uma Experiência Exclusiva:</strong><br>
+                    Em comemoração ao nosso aniversário, a Chácara Vale do Sul está promovendo um evento especial! Durante o acampamento, gravaremos um <strong>curta-metragem promocional de terror</strong> e você foi um dos convidados selecionados para integrar o elenco oficial desse projeto!
+                </div>
+
+                <label for="player-name">Insira seu nome para resgatar seu presente VIP e descobrir o seu papel no filme:</label>
+                <input type="text" id="player-name" placeholder="Digite seu nome completo..." autocomplete="off">
+                <button class="btn-gold" onclick="revealEnvelope()">ABRIR ENVELOPE E RESGATAR PRESENTES</button>
+            </div>
+
+            <!-- ETAPA 2: REVELAÇÃO DO ENVELOPE DO LÍDER -->
+            <div class="reveal-step" id="step-2">
+                <div class="role-badge">⭐ O Líder ⭐</div>
+                
+                <p class="greeting" id="greeting-text"></p>
+                
+                <div class="description-box">
+                    <strong>O Líder</strong> é conhecido por sua presença inabalável, visão estratégica e capacidade de manter a calma sob pressão. Quando o grupo se vê indeciso ou diante de caminhos incertos na gravação, é a sua voz que traz direção, segurança e a coragem necessária para seguir em frente.
+                </div>
+
+                <div class="instructions-title">
+                    <span>📜</span> Suas Diretrizes Secretas de Interpretação:
+                </div>
+
+                <ul class="instructions-list">
+                    <li><strong>Tome a Frente:</strong> Em momentos de dúvida ou exploração, assuma a liderança e tome as decisões finais pelo grupo.</li>
+                    <li><strong>Mantenha a Postura:</strong> Mesmo que as coisas pareçam fugir do controle durante a gravação, demonstre firmeza e proteja a moral dos seus companheiros.</li>
+                    <li><strong>Organize o Grupo:</strong> Distribua tarefas e certifique-se de que ninguém fique para trás nas atividades do acampamento.</li>
+                </ul>
+
+                <div class="gift-footer">
+                    🎁 <strong>Seu Presente VIP de Boas-Vindas:</strong><br>
+                    Sua confirmação foi registrada com sucesso! Como Líder do nosso curta-metragem, um kit exclusivo de boas-vindas estará aguardando você diretamente em seu chalé na Chácara Vale do Sul.
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function revealEnvelope() {
+            const nameInput = document.getElementById('player-name').value.trim();
+            if (!nameInput) {
+                alert('Por favor, digite seu nome antes de abrir o envelope!');
+                return;
+            }
+
+            document.getElementById('greeting-text').textContent = `Parabéns, ${nameInput}! Você foi escolhido como O Líder.`;
+
+            document.getElementById('step-1').style.display = 'none';
+            const step2 = document.getElementById('step-2');
+            step2.style.display = 'block';
+            step2.classList.add('animate-in');
+        }
+    </script>
+</body>
+</html>
