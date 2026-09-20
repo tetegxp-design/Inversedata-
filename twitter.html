@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X / Tendências: #ChacaraValedoSul</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #000000;
+            --border-color: #2f3336;
+            --text-main: #e7e9ea;
+            --text-muted: #71767b;
+            --twitter-blue: #1d9bf0;
+            --accent-red: #f4212e;
+            --accent-gold: #d4af37;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        /* Web Layout (Sidebar Left + Feed Center + Widgets Right) */
+        .site-container {
+            width: 100%;
+            max-width: 1250px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Sidebar Esquerda */
+        .sidebar-left {
+            width: 250px;
+            padding: 20px 10px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .x-brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            padding-left: 12px;
+            color: var(--text-main);
+        }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-post {
+            background-color: var(--twitter-blue);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* Feed Central */
+        .feed-center {
+            flex-grow: 1;
+            max-width: 600px;
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px;
+            z-index: 100;
+        }
+
+        .top-bar h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .trending-banner {
+            padding: 16px;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.1) 0%, rgba(0,0,0,0) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .trending-topic {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        .trending-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin: 4px 0;
+        }
+
+        /* Cards de Tweets */
+        .tweet-card {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+
+        .tweet-card:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .tweet-content { flex-grow: 1; }
+
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .display-name { font-weight: 700; }
+        .username, .tweet-time { color: var(--text-muted); font-size: 0.88rem; }
+        .verified-badge { color: var(--twitter-blue); }
+
+        .tweet-text {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+
+        .tweet-text a { color: var(--twitter-blue); text-decoration: none; }
+
+        .quote-tweet {
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .action-item { cursor: pointer; }
+        .action-item:hover { color: var(--twitter-blue); }
+
+        /* Sidebar Direita (Widgets) */
+        .sidebar-right {
+            width: 350px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .search-bar {
+            background-color: #202327;
+            border-radius: 30px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border: 1px solid transparent;
+        }
+
+        .widget-box {
+            background-color: #16181c;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .widget-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .trend-item {
+            margin-bottom: 12px;
+        }
+
+        .trend-category { font-size: 0.75rem; color: var(--text-muted); }
+        .trend-name { font-weight: 700; font-size: 0.95rem; }
+        .trend-count { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Estilos de Avatares */
+        .av-1 { background: linear-gradient(135deg, #e91e63, #9c27b0); }
+        .av-2 { background: linear-gradient(135deg, #00bcd4, #009688); }
+        .av-3 { background: linear-gradient(135deg, #ff9800, #ff5722); }
+        .av-4 { background: linear-gradient(135deg, #607d8b, #3f51b5); }
+        .av-5 { background: linear-gradient(135deg, #8bc34a, #4caf50); }
+        .av-6 { background: linear-gradient(135deg, #d4af37, #8b1e1e); }
+
+        .vip-tag {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        @media (max-width: 1000px) {
+            .sidebar-right { display: none; }
+        }
+        @media (max-width: 700px) {
+            .sidebar-left { display: none; }
+            .feed-center { border-right: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="site-container">
+        
+        <!-- Sidebar Esquerda -->
+        <aside class="sidebar-left">
+            <div class="x-brand">𝕏</div>
+            <ul class="nav-menu">
+                <li class="nav-item">🏠 Início</li>
+                <li class="nav-item active">🔍 Explorar</li>
+                <li class="nav-item">🔔 Notificações</li>
+                <li class="nav-item">✉️ Mensagens</li>
+                <li class="nav-item">🔖 Itens salvos</li>
+                <li class="nav-item">👤 Perfil</li>
+            </ul>
+            <button class="btn-post">Postar</button>
+        </aside>
+
+        <!-- Feed Central -->
+        <main class="feed-center">
+            <div class="top-bar">
+                <h2>Explorar Assuntos</h2>
+            </div>
+
+            <div class="trending-banner">
+                <div class="trending-topic">Tendência no Brasil • Entretenimento</div>
+                <div class="trending-title">#ChacaraValedoSul</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">42,8 mil posts com fofocas e teorias sobre a gravação do curta-metragem</div>
+            </div>
+
+            <!-- Tweet 1 -->
+            <div class="tweet-card">
+                <div class="avatar av-1">💅</div>
+                <div class="tweet-content">
+                    <div class="tweet-header">
+                        <span class="display-name">Fofoquei BR</span>
+                        <span class="verified-badge">☑</span>
+                        <span class="username">@fofoqueibr</span>
+                        <span class="tweet-time">• 2h</span>
+                    </div>
+                    <div class="tweet-text">
+                        GENTE? 😳 A equipe que foi gravar o curta de terror na <a>#ChacaraValedoSul</a> tá dizendo que a produção tá um caos. Vários atores VIPs recebendo papéis em envelopes fechados e um clima esquisito de tensão entre a galera. Dizem que nem a direção sabe quem é quem! 🎬🍿
+                    </div>
+                    <div class="tweet-actions">
+                        <span class="action-item">💬 342</span>
+                        <span class="action-item">🔄 1.2k</span>
+                        <span class="action-item">❤️ 8.5k</span>
+                        <span class="action-item">📊 120k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tweet 2 -->
+            <div class="tweet-card">
+                <div class="avatar av-2">🎧</div>
+                <div class="tweet-content">
+                    <div class="tweet-header">
+                        <span class="display-name">Lucas M.</span>
+                        <span class="username">@lucas_soundmix</span>
+                        <span class="tweet-time">• 4h</span>
+                    </div>
+                    <div class="tweet-text">
+                        Trabalhei na técnica de som num evento na Vale do Sul no ano passado e juro por DEUS: não cheguem perto daquela floresta ao fundo depois do pôr do sol. Captamos umas frequências de áudio no microfone boom que pareciam sussurros em cima de sussurros. 💀 <a>#ChacaraValedoSul</a>
+                    </div>
+                    <div class="tweet-actions">
+                        <span class="action-item">💬 89</span>
+                        <span class="action-item">🔄 450</span>
+                        <span class="action-item">❤️ 3.1k</span>
+                        <span class="action-item">📊 45k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tweet 3 -->
+            <div class="tweet-card">
+                <div class="avatar av-3">👁️</div>
+                <div class="tweet-content">
+                    <div class="tweet-header">
+                        <span class="display-name">Arquivo Oculto</span>
+                        <span class="verified-badge">☑</span>
+                        <span class="username">@arquivoculto</span>
+                        <span class="tweet-time">• 6h</span>
+                    </div>
+                    <div class="tweet-text">
+                        Thread sobre as lendas urbanas da <a>#ChacaraValedoSul</a> 🧵👇<br><br>
+                        Antes de virar esse local chique pra gravações e festas VIP, o terreno pertenceu à família Sul no século XIX. O cemitério privado que fica atrás da piscina não tá ali por enfeite...
+                    </div>
+                    <div class="quote-tweet">
+                        <div style="font-weight: bold; font-size: 0.85rem;">Diário Regional @diarioregional</div>
+                        <div style="font-size: 0.85rem; color: #ccc; margin-top: 4px;">
+                            "Polícia investiga desaparecimento de 3 funcionários no setor de mata da Chácara Vale do Sul..."
+                        </div>
+                    </div>
+                    <div class="tweet-actions">
+                        <span class="action-item">💬 512</span>
+                        <span class="action-item">🔄 2.8k</span>
+                        <span class="action-item">❤️ 14.2k</span>
+                        <span class="action-item">📊 210k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tweet 4 -->
+            <div class="tweet-card">
+                <div class="avatar av-4">✨</div>
+                <div class="tweet-content">
+                    <div class="tweet-header">
+                        <span class="display-name">Bia Camargo</span>
+                        <span class="username">@biacamargoo</span>
+                        <span class="tweet-time">• 7h</span>
+                    </div>
+                    <div class="tweet-text">
+                        Meu amigo que tá no elenco de <a>#LuzCameraPanico</a> disse que o sinal de celular simplesmente MORRE quando você passa pelo portão principal. E o pior: os chalés têm trancas só do lado de FORA? Que tipo de hotel faz isso???? 😳😭
+                    </div>
+                    <div class="tweet-actions">
+                        <span class="action-item">💬 120</span>
+                        <span class="action-item">🔄 310</span>
+                        <span class="action-item">❤️ 2.4k</span>
+                        <span class="action-item">📊 38k</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tweet 5 -->
+            <div class="tweet-card">
+                <div class="avatar av-6">🕯️</div>
+                <div class="tweet-content">
+                    <div class="tweet-header">
+                        <span class="display-name">Observador do Vale</span> <span class="vip-tag">LOCAL</span>
+                        <span class="username">@valedosul_watch</span>
+                        <span class="tweet-time">• 11h</span>
+                    </div>
+                    <div class="tweet-text">
+                        Se você foi um dos 7 convidados escolhidos para o evento VIP deste final de semana na <a>#ChacaraValedoSul</a>... Não abra o envelope se o lacre de cera estiver violado. E se a luz piscar três vezes no galpão, NÃO procure o gerador. 🩸
+                    </div>
+                    <div class="tweet-actions">
+                        <span class="action-item">💬 204</span>
+                        <span class="action-item">🔄 1.9k</span>
+                        <span class="action-item">❤️ 9.8k</span>
+                        <span class="action-item">📊 150k</span>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Sidebar Direita -->
+        <aside class="sidebar-right">
+            <div class="search-bar">🔍 Buscar no X</div>
+
+            <div class="widget-box">
+                <div class="widget-title">O que está acontecendo</div>
+                
+                <div class="trend-item">
+                    <div class="trend-category">Entretenimento • Assunto do Momento</div>
+                    <div class="trend-name">#LuzCameraPanico</div>
+                    <div class="trend-count">18,4 mil posts</div>
+                </div>
+
+                <div class="trend-item">
+                    <div class="trend-category">Brasil • Polícia</div>
+                    <div class="trend-name">Chácara Vale do Sul</div>
+                    <div class="trend-count">42,8 mil posts</div>
+                </div>
+
+                <div class="trend-item">
+                    <div class="trend-category">Cinema • Bastidores</div>
+                    <div class="trend-name">Envelopes VIP</div>
+                    <div class="trend-count">5,2 mil posts</div>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+</body>
+  </html>
+  
