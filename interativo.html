@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝕏 / Tendências: #CasoValeDoSul2024</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-black: #000000;
+            --border-color: #2f3336;
+            --text-main: #e7e9ea;
+            --text-muted: #71767b;
+            --twitter-blue: #1d9bf0;
+            --accent-gold: #d4af37;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .site-container {
+            width: 100%;
+            max-width: 1250px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Sidebar Esquerda */
+        .sidebar-left {
+            width: 250px;
+            padding: 20px 10px;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .x-brand { font-size: 1.8rem; font-weight: 800; padding-left: 12px; }
+
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .nav-item.active { background-color: rgba(255, 255, 255, 0.1); }
+
+        /* Feed Central */
+        .feed-center {
+            flex-grow: 1;
+            max-width: 600px;
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px;
+            z-index: 100;
+        }
+
+        .trending-banner {
+            padding: 16px;
+            background: linear-gradient(180deg, rgba(212, 175, 55, 0.15) 0%, rgba(0,0,0,0) 100%);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Card do Post Interativo */
+        .tweet-wrapper {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tweet-card {
+            padding: 16px;
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .tweet-card:hover {
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .tweet-content { flex-grow: 1; }
+
+        .tweet-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.95rem;
+            margin-bottom: 4px;
+        }
+
+        .display-name { font-weight: 700; }
+        .username, .tweet-time { color: var(--text-muted); font-size: 0.88rem; }
+        .verified-badge { color: var(--twitter-blue); }
+
+        .tweet-text {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            margin-bottom: 10px;
+        }
+
+        .tweet-text a { color: var(--twitter-blue); text-decoration: none; }
+
+        .tweet-actions {
+            display: flex;
+            justify-content: space-between;
+            max-width: 400px;
+            color: var(--text-muted);
+            font-size: 0.82rem;
+            margin-top: 8px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+
+        .action-btn:hover { color: var(--twitter-blue); }
+
+        /* Área de Comentários (Escondida por padrão) */
+        .replies-container {
+            display: none;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 12px 16px 12px 68px;
+        }
+
+        .reply-item {
+            display: flex;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .reply-item:last-child { border-bottom: none; }
+
+        .reply-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .reply-content { flex-grow: 1; }
+
+        .reply-header {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            margin-bottom: 2px;
+        }
+
+        .reply-text {
+            font-size: 0.88rem;
+            color: #d0d7de;
+        }
+
+        /* Sidebar Direita */
+        .sidebar-right {
+            width: 350px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .search-bar {
+            background-color: #202327;
+            border-radius: 30px;
+            padding: 12px 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .widget-box {
+            background-color: #16181c;
+            border-radius: 16px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .widget-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; }
+        .trend-item { margin-bottom: 12px; }
+        .trend-category { font-size: 0.75rem; color: var(--text-muted); }
+        .trend-name { font-weight: 700; font-size: 0.95rem; }
+        .trend-count { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* Avatares */
+        .av-1 { background: linear-gradient(135deg, #3f51b5, #1a237e); }
+        .av-2 { background: linear-gradient(135deg, #e91e63, #880e4f); }
+        .av-3 { background: linear-gradient(135deg, #009688, #004d40); }
+        .av-4 { background: linear-gradient(135deg, #d4af37, #5d4037); }
+        .av-reply { background: #333; }
+
+        @media (max-width: 1000px) { .sidebar-right { display: none; } }
+        @media (max-width: 700px) { .sidebar-left { display: none; } }
+    </style>
+</head>
+<body>
+
+    <div class="site-container">
+        <!-- Sidebar Esquerda -->
+        <aside class="sidebar-left">
+            <div class="x-brand">𝕏</div>
+            <ul class="nav-menu">
+                <li class="nav-item">🏠 Início</li>
+                <li class="nav-item active">🔍 Explorar</li>
+                <li class="nav-item">🔔 Notificações</li>
+                <li class="nav-item">👤 Perfil</li>
+            </ul>
+        </aside>
+
+        <!-- Feed Central -->
+        <main class="feed-center">
+            <div class="top-bar">
+                <h2>𝕏 — Nostalgia & True Crime (2026)</h2>
+            </div>
+
+            <div class="trending-banner">
+                <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Nostalgia • 2 anos do ocorrido</div>
+                <div style="font-size: 1.4rem; font-weight: 800; margin: 4px 0;">#CasoValeDoSul2024</div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">98,5 mil posts lembrando o misterioso cancelamento de "Luz, Câmera e PÂNICO!"</div>
+            </div>
+
+            <!-- Post 1 -->
+            <div class="tweet-wrapper">
+                <div class="tweet-card" onclick="toggleReplies('replies-1')">
+                    <div class="avatar av-1">🎙️</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="display-name">PodCrime Brasil</span>
+                            <span class="verified-badge">☑</span>
+                            <span class="username">@podcrimebr</span>
+                            <span class="tweet-time">• 2026</span>
+                        </div>
+                        <div class="tweet-text">
+                            Completa 2 anos hoje o misterioso caso da <a>#ChacaraValedoSul</a>. Lembra de quando uma galera foi gravar o curta 'Luz, Câmera e PÂNICO!' com envelopes VIPs e a produção inteira simplesmente desapareceu do mapa durante a noite? A fita perdida até hoje não foi divulgada na íntegra. 🧵👇
+                        </div>
+                        <div class="tweet-actions">
+                            <span class="action-btn">💬 3 respostas</span>
+                            <span class="action-btn">🔄 3.4k</span>
+                            <span class="action-btn">❤️ 22.1k</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Respostas do Post 1 -->
+                <div id="replies-1" class="replies-container">
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">🕵️</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Rafa_Investiga</span>
+                                <span class="username">@rafasleuth</span>
+                            </div>
+                            <div class="reply-text">Até hoje espero soltarem a fita completa do rolo 3! Aquele trecho vazado do áudio do microfone na floresta me dá arrepios.</div>
+                        </div>
+                    </div>
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">🎬</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Marcos Cine</span>
+                                <span class="username">@marcos_filmes</span>
+                            </div>
+                            <div class="reply-text">Minha teoria é que foi tudo uma jogada de marketing de um ARG que deu MUITO errado quando a polícia interveio.</div>
+                        </div>
+                    </div>
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">🕯️</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Carol_S</span>
+                                <span class="username">@carols_99</span>
+                            </div>
+                            <div class="reply-text">Quem tava acompanhando ao vivo pelo Twitter em 2024 sabe o pavor que foi quando a energia caiu e ninguém mais postou nada...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 2 -->
+            <div class="tweet-wrapper">
+                <div class="tweet-card" onclick="toggleReplies('replies-2')">
+                    <div class="avatar av-2">📼</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="display-name">Cinephile Nostalgia</span>
+                            <span class="username">@lostmedia_br</span>
+                            <span class="tweet-time">• 2026</span>
+                        </div>
+                        <div class="tweet-text">
+                            Mano, em 2024 eu achava que o marketing daquele filme era a coisa mais genial do mundo. Hoje em dia eu vejo o estado que a Chácara Vale do Sul ficou (tudo abandonado e lacrado) e me dá um cagaço absurdo. Alguém aí lembra das regras dos envelopes? 😳 <a>#CasoValeDoSul2024</a>
+                        </div>
+                        <div class="tweet-actions">
+                            <span class="action-btn">💬 2 respostas</span>
+                            <span class="action-btn">🔄 890</span>
+                            <span class="action-btn">❤️ 7.3k</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Respostas do Post 2 -->
+                <div id="replies-2" class="replies-container">
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">✉️</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Vitor H.</span>
+                                <span class="username">@vitor_h22</span>
+                            </div>
+                            <div class="reply-text">Regra número 1: Não quebre o lacre de cera vermelha antes de entrar na cabana. Bizarro demais!</div>
+                        </div>
+                    </div>
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">🌑</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Gabi</span>
+                                <span class="username">@gabipost</span>
+                            </div>
+                            <div class="reply-text">Tenho o print da thread original com a foto dos envelopes. Se você reparar no fundo, dá pra ver alguém na janela.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post 3 -->
+            <div class="tweet-wrapper">
+                <div class="tweet-card" onclick="toggleReplies('replies-3')">
+                    <div class="avatar av-3">👁️</div>
+                    <div class="tweet-content">
+                        <div class="tweet-header">
+                            <span class="display-name">Urbex Explorer</span>
+                            <span class="username">@urbex_sp</span>
+                            <span class="tweet-time">• 2026</span>
+                        </div>
+                        <div class="tweet-text">
+                            Tentamos entrar na Chácara Vale do Sul mês passado pra gravar um vlog pro YouTube. A polícia ainda faz ronda na entrada da estrada de cascalho. Um morador local disse que às vezes ainda dá pra ouvir o barulho do gerador vindo da mata... bizarro demais. 💀
+                        </div>
+                        <div class="tweet-actions">
+                            <span class="action-btn">💬 2 respostas</span>
+                            <span class="action-btn">🔄 1.5k</span>
+                            <span class="action-btn">❤️ 11.2k</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Respostas do Post 3 -->
+                <div id="replies-3" class="replies-container">
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">🚔</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Sargento Silva</span>
+                                <span class="username">@silva_patrol</span>
+                            </div>
+                            <div class="reply-text">A área continua sob custódia judicial e interdição de risco estrutural e ambiental. Não se aproximem do cemitério antigo.</div>
+                        </div>
+                    </div>
+                    <div class="reply-item">
+                        <div class="reply-avatar av-reply">📹</div>
+                        <div class="reply-content">
+                            <div class="reply-header">
+                                <span class="display-name">Luan Vlog</span>
+                                <span class="username">@luan_vlogs</span>
+                            </div>
+                            <div class="reply-text">Qual era a cor do carro da polícia que tava lá? A gente tentou ir pelo rio atrás do galpão mas o cheiro de queimado era horrível.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Sidebar Direita -->
+        <aside class="sidebar-right">
+            <div class="search-bar">🔍 Buscar no X</div>
+            <div class="widget-box">
+                <div class="widget-title">O que está acontecendo (2026)</div>
+                <div class="trend-item">
+                    <div class="trend-category">Nostalgia • Assunto do Momento</div>
+                    <div class="trend-name">#CasoValeDoSul2024</div>
+                    <div class="trend-count">98,5 mil posts</div>
+                </div>
+                <div class="trend-item">
+                    <div class="trend-category">Cinema • Lost Media</div>
+                    <div class="trend-name">Luz Câmera Pânico</div>
+                    <div class="trend-count">12,1 mil posts</div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Script de Interatividade -->
+    <script>
+        function toggleReplies(replyId) {
+            const repliesElement = document.getElementById(replyId);
+            if (repliesElement.style.display === "block") {
+                repliesElement.style.display = "none";
+            } else {
+                repliesElement.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
