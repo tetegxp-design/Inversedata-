@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tragédia em Vale do Sul: Polícia investiga desaparecimento de funcionários durante celebração VIP - Diário Regional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-news: #c81919;
+            --dark-header: #111111;
+            --bg-body: #f8f9fa;
+            --text-main: #222222;
+            --text-muted: #666666;
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Topbar / Header */
+        header {
+            background-color: var(--dark-header);
+            color: white;
+            border-bottom: 4px solid var(--red-news);
+        }
+
+        .header-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--red-news);
+        }
+
+        .nav-meta {
+            font-size: 0.85rem;
+            color: #aaa;
+        }
+
+        /* Layout Principal */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+
+        .category-tag {
+            color: var(--red-news);
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        h1.article-title {
+            font-family: 'Merriweather', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #111;
+            line-height: 1.3;
+            margin-bottom: 15px;
+        }
+
+        p.article-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            margin-bottom: 30px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .author {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* Artigo / Texto */
+        .article-content {
+            font-family: 'Merriweather', serif;
+            font-size: 1.05rem;
+            color: #2b2b2b;
+            line-height: 1.8;
+        }
+
+        .article-content p {
+            margin-bottom: 20px;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            background: #1a1a1a;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.8)), radial-gradient(circle, #2d4a3e 0%, #0d1a13 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .image-caption {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            padding: 8px 12px;
+            background: #f1f1f1;
+            border-left: 3px solid var(--red-news);
+        }
+
+        blockquote {
+            border-left: 4px solid var(--red-news);
+            padding-left: 20px;
+            margin: 25px 0;
+            font-style: italic;
+            color: #444;
+            background: #fdf2f2;
+            padding: 15px 20px;
+            border-radius: 0 6px 6px 0;
+        }
+
+        .highlight-box {
+            background: #f8f9fa;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 30px 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box h3 {
+            font-size: 1rem;
+            color: var(--red-news);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 50px;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1.article-title { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">DIÁRIO<span>REGIONAL</span></a>
+            <div class="nav-meta">Domingo, 13 de Outubro de 2024</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <span class="category-tag">Polícia & Casos Sem Solução</span>
+        
+        <h1 class="article-title">Mistério em Vale do Sul: Celebração de 21 anos da famosa chácara é marcada por tragédia e buscas na mata</h1>
+        
+        <p class="article-subtitle">Conhecida como refúgio de luxo e palco de grandes celebrações na região, a Chácara Vale do Sul torna-se centro de investigação policial após desaparecimento de funcionários e incidente não esclarecido na floresta fechada.</p>
+
+        <div class="meta-info">
+            <span>Por <span class="author">Redação Diário Regional</span></span>
+            <span>Atualizado em 13/10/2024 às 08h42</span>
+        </div>
+
+        <article class="article-content">
+            <p><strong>VALE DO SUL —</strong> O que deveria ter sido uma noite memorável em celebração às mais de duas décadas de história da famosa <strong>Chácara Vale do Sul</strong> transformou-se em um dos episódios mais enigmáticos registrados pela polícia local nos últimos anos. Durante as comemorações do 21º aniversário do empreendimento, um grave incidente ocorrido nas imediações da propriedade mobilizou equipes de resgate e autoridades durante a madrugada deste domingo (13).</p>
+
+            <div class="image-container">
+                <div class="image-placeholder">
+                    <h2 style="font-family: 'Plus Jakarta Sans'; font-size: 1.4rem; letter-spacing: 2px;">CHÁCARA VALE DO SUL</h2>
+                    <p style="font-size: 0.9rem; color: #ccc; margin-top: 10px;">Área isolada da mata nativa onde buscas estão sendo concentradas.</p>
+                </div>
+                <div class="image-caption">
+                    Entrada do setor norte da propriedade isolada pela perícia policial na manhã deste domingo (13/10/2024). / Foto: Arquivo Diário Regional
+                </div>
+            </div>
+
+            <p>Famosa nacionalmente por receber eventos exclusivos, gravações de projetos audiovisuais e personalidades da alta sociedade, a propriedade ostentava um histórico impecável de prestígio. No entanto, relatos de convidados indicam que a atmosfera festiva mudou drasticamente por volta da meia-noite, quando uma falha no sistema elétrico afetou os ilusionismos e os refletores das áreas externas.</p>
+
+            <p>Segundo informações preliminares confirmadas pelo Corpo de Bombeiros, três funcionários da equipe de apoio técnico deslocaram-se em direção à mata nativa ao fundo do terreno para verificar o gerador secundário e restabelecer a iluminação da área da piscina. Eles não retornaram.</p>
+
+            <blockquote>
+                "Ouvimos ruídos estranhos vindos da vegetação densa, seguidos por gritos de socorro e o barulho de galhos colidindo com força. A névoa estava extremamente baixa. Quando a equipe de segurança tentou se aproximar, encontrou apenas equipamentos de iluminação danificados e marcas na lama."
+                <br><br><small>— Relato anônimo de um dos convidados prestado à polícia.</small>
+            </blockquote>
+
+            <p>Testemunhas afirmam que a mata nativa que circunda a Chácara Vale do Sul sempre foi cercada por lendas locais de difícil verificação, mas o evento desta madrugada acendeu o alerta máximo das autoridades. Um varredura realizada por cães farejadores na primeira luz do dia encontrou pertences pessoais e uma ferramenta de manutenção nas proximidades do antigo cemitério da família, localizado no limite com a floresta fecha, mas nenhum vestígio dos três colaboradores desaparecidos.</p>
+
+            <div class="highlight-box">
+                <h3>📌 O que se sabe até o momento:</h3>
+                <ul>
+                    <li><strong>Data do incidente:</strong> Madrugada de 13/10/2024.</li>
+                    <li><strong>Local:</strong> Chácara Vale do Sul (Setor de mata nativa ao fundo da propriedade).</li>
+                    <li><strong>Vítimas:</strong> 3 funcionários do setor operacional permanecem desaparecidos.</li>
+                    <li><strong>Situação atual:</strong> A propriedade teve suas atividades parcialmente suspensas para perícia técnica.</li>
+                </ul>
+            </div>
+
+            <p>Em nota oficial enviada à imprensa, a assessoria da Chácara Vale do Sul lamentou ocorrido, afirmou estar colaborando integralmente com as forças de segurança e ressaltou que as instalações dos chalés e do casarão principal continuam operando dentro dos padrões de segurança para os hóspedes devidamente cadastrados.</p>
+
+            <p>A Polícia Civil instaurou um inquérito para apurar se o caso trata-se de um acidente geológico, ataque de animais silvestres ou ação criminosa premeditada. As buscas na floresta fechada foram interrompidas ao anoitecer devido à visibilidade quase nula provocada pela densa névoa da região e devem retornar nas primeiras horas de amanhã.</p>
+        </article>
+    </main>
+
+    <footer>
+        &copy; 2024 Diário Regional Imprensa e Mídia Digital Ltd. Todos os direitos reservados.
+    </footer>
+
+</body>
+</html>
