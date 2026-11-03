@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#101a2b">
+<title>Colégio Militar Bluewold</title>
+
+<style>
+:root {
+  --navy: #101a2b;
+  --navy2: #17263b;
+  --cream: #f2efe8;
+  --gold: #b49a70;
+  --silver: #c7cbd0;
+  --ink: #17202c;
+  --muted: #697586;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.topline {
+  background: #0a1220;
+  color: #d9e0e8;
+  padding: 10px 5%;
+  font: 10px Arial, sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  min-height: 82px;
+  padding: 0 5%;
+  background: var(--navy);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #ffffff20;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.crest {
+  width: 44px;
+  height: 50px;
+  border: 1px solid #b9c3ce;
+  clip-path: polygon(50% 0,95% 13%,88% 75%,50% 100%,12% 75%,5% 13%);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 24px;
+}
+
+.brand strong {
+  display: block;
+  font: 600 13px Arial;
+  letter-spacing: 3px;
+}
+
+.brand small {
+  display: block;
+  color: #aeb8c5;
+  font: 9px Arial;
+  letter-spacing: 2px;
+  margin-top: 5px;
+}
+
+.navlinks {
+  display: flex;
+  gap: 25px;
+  font: 10px Arial;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #d6dde6;
+}
+
+.navlinks a:hover {
+  color: var(--gold);
+}
+
+.menu {
+  display: none;
+  background: none;
+  color: white;
+  border: 1px solid #ffffff55;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.hero {
+  min-height: 650px;
+  background:
+    linear-gradient(90deg,rgba(8,16,28,.93),rgba(8,16,28,.55),rgba(8,16,28,.15)),
+    url('https://images.unsplash.com/photo-1564981797816-1043664bf78d?auto=format&fit=crop&w=2200&q=85')
+    center/cover;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 90px 9%;
+  position: relative;
+}
+
+.hero-content {
+  max-width: 690px;
+}
+
+.eyebrow,
+.kicker {
+  font: 10px Arial;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.hero h1 {
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 400;
+  line-height: .98;
+  margin: 22px 0;
+}
+
+.hero p {
+  font: 15px/1.9 Arial;
+  color: #d9e0e8;
+  max-width: 540px;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 35px;
+}
+
+.btn {
+  padding: 15px 23px;
+  border: 1px solid #d7c6a6;
+  color: white;
+  font: 10px Arial;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.btn.fill {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.section {
+  padding: 100px 9%;
+}
+
+.dark {
+  background: var(--navy);
+  color: white;
+}
+
+.section-head {
+  max-width: 720px;
+  margin-bottom: 45px;
+}
+
+.section h2 {
+  font-size: clamp(34px, 4.4vw, 56px);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 15px 0 20px;
+}
+
+.lead {
+  font: 14px/1.9 Arial;
+  color: var(--muted);
+  max-width: 680px;
+  margin-bottom: 15px;
+}
+
+.dark .lead {
+  color: #bdc7d3;
+}
+
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.intro-art {
+  min-height: 430px;
+  background: linear-gradient(145deg,#263b53,#101a2b 65%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.intro-art::before {
+  content: "";
+  position: absolute;
+  inset: 35px;
+  border: 1px solid #d3d9df66;
+}
+
+.intro-art::after {
+  content: "B";
+  font-size: 230px;
+  color: #d7dce322;
+}
+
+.art-caption {
+  position: absolute;
+  bottom: 30px;
+  color: white;
+  font: 10px Arial;
+  letter-spacing: 2px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 1px;
+  background: #ffffff25;
+  margin-top: 55px;
+}
+
+.stat {
+  padding: 25px;
+  background: var(--navy);
+}
+
+.stat b {
+  display: block;
+  font-size: 32px;
+  font-weight: 400;
+  color: #d4bd97;
+}
+
+.stat span {
+  font: 10px Arial;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #b8c2ce;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 22px;
+}
+
+.card {
+  background: white;
+  box-shadow: 0 12px 35px #16243812;
+}
+
+.card-image {
+  height: 230px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg,#0c1728a8,transparent 60%);
+}
+
+.card-image span {
+  position: absolute;
+  bottom: 18px;
+  left: 20px;
+  color: white;
+  font: 10px Arial;
+  letter-spacing: 2px;
+  z-index: 1;
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card h3 {
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.card p {
+  font: 13px/1.8 Arial;
+  color: var(--muted);
+}
+
+.campus1 {
+  background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80');
+}
+
+.campus2 {
+  background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=80');
+}
+
+.campus3 {
+  background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=80');
+}
+
+.campus4 {
+  background-image: url('https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=900&q=80');
+}
+
+.campus5 {
+  background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=900&q=80');
+}
+
+.campus6 {
+  background-image: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80');
+}
+
+.programs {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 1px;
+  background: #d9d4ca;
+  margin-top: 35px;
+}
+
+.program {
+  background: var(--cream);
+  padding: 30px;
+}
+
+.program small {
+  font: 10px Arial;
+  letter-spacing: 2px;
+  color: #9b8058;
+}
+
+.program h3 {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 12px 0;
+}
+
+.program p {
+  font: 13px/1.8 Arial;
+  color: var(--muted);
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 65px;
+  align-items: center;
+}
+
+.timeline {
+  border-left: 1px solid var(--gold);
+  padding-left: 30px;
+  margin-top: 30px;
+}
+
+.event {
+  position: relative;
+  margin-bottom: 28px;
+}
+
+.event::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--gold);
+  left: -35px;
+  top: 6px;
+}
+
+.event b {
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.event p {
+  font: 13px/1.8 Arial;
+  color: #bdc7d3;
+  margin-top: 7px;
+}
+
+.quote {
+  padding: 75px 9%;
+  background: #e5e0d6;
+  text-align: center;
+}
+
+.quote blockquote {
+  max-width: 850px;
+  margin: auto;
+  font-size: clamp(27px,4vw,43px);
+  color: #263449;
+  font-style: italic;
+}
+
+.quote cite {
+  display: block;
+  margin-top: 25px;
+  font: 10px Arial;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #7c7468;
+}
+
+.notice {
+  background: #e9e4d9;
+  padding: 45px 9%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+.notice h3 {
+  font-size: 27px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+
+.notice p {
+  font: 13px Arial;
+  color: var(--muted);
+}
+
+.notice a {
+  color: white;
+  background: var(--navy);
+  padding: 14px 20px;
+  font: 10px Arial;
+  letter-spacing: 2px;
+}
+
+.footer {
+  background: #0a1220;
+  color: #dce2e9;
+  padding: 65px 9% 30px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 45px;
+}
+
+.footer p,
+.footer a {
+  font: 12px/1.9 Arial;
+  color: #aeb9c6;
+}
+
+.footer h4 {
+  font: 10px Arial;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #d3bd98;
+}
+
+.fiction {
+  font: 9px Arial;
+  letter-spacing: 1px;
+  color: #8d9aac;
+  margin-top: 14px;
+}
+
+.copyright {
+  border-top: 1px solid #ffffff22;
+  margin-top: 45px;
+  padding-top: 22px;
+  font: 10px Arial;
+  color: #7e8b9b;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media(max-width:800px) {
+  .navlinks {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    background: var(--navy);
+    padding: 25px;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .navlinks.mobile-open {
+    display: flex;
+  }
+
+  .menu {
+    display: block;
+  }
+
+  .intro-grid,
+  .split {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .notice {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media(max-width:520px) {
+  .topline {
+    font-size: 8px;
+  }
+
+  .cards,
+  .programs,
+  .stats,
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: 590px;
+    padding: 75px 8%;
+  }
+
+  .hero h1 {
+    font-size: 54px;
+  }
+
+  .section {
+    padding: 75px 8%;
+  }
+
+  .copyright {
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topline">
+  <span>Instituição de ensino • Desde 19—</span>
+  <span>Excelência · Disciplina · Conhecimento</span>
+</div>
+
+<nav class="nav">
+  <a class="brand" href="#inicio">
+    <div class="crest">B</div>
+    <div>
+      <strong>BLUEWOLD</strong>
+      <small>COLÉGIO MILITAR</small>
+    </div>
+  </a>
+
+  <div class="navlinks">
+    <a href="#instituicao">A instituição</a>
+    <a href="#campus">Conheça o campus</a>
+    <a href="#ensino">Ensino</a>
+    <a href="#historia">Nossa história</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <button class="menu" onclick="document.querySelector('.navlinks').classList.toggle('mobile-open')">
+    MENU
+  </button>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="eyebrow">Colégio Militar Bluewold · Conhecimento que permanece</div>
+    <h1>Formamos<br>mais que<br>estudantes.</h1>
+    <p>
+      Uma instituição construída sobre tradição, responsabilidade
+      e compromisso com a formação integral. Um lugar onde
+      conhecimento, caráter e comunidade caminham juntos.
+    </p>
+
+    <div class="actions">
+      <a class="btn fill" href="#instituicao">Conheça o Bluewold</a>
+      <a class="btn" href="#campus">Explore o campus</a>
+    </div>
+  </div>
+</header>
+
+<section class="section" id="instituicao">
+  <div class="intro-grid">
+    <div>
+      <div class="kicker">Nossa instituição</div>
+      <h2>Tradição que inspira. Educação que transforma.</h2>
+      <p class="lead">
+        O Colégio Militar Bluewold é uma instituição de ensino
+        dedicada à formação acadêmica, cívica e humana de seus
+        estudantes. Sua proposta une rigor intelectual,
+        convivência respeitosa e desenvolvimento de autonomia.
+      </p>
+      <p class="lead">
+        Mais do que preparar para avaliações, buscamos formar
+        pessoas capazes de pensar criticamente, agir com
+        responsabilidade e contribuir com a sociedade.
+      </p>
+    </div>
+
+    <div class="intro-art">
+      <div class="art-caption">Colégio Militar Bluewold · Brasão institucional</div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <b>19—</b>
+      <span>Ano de fundação</span>
+    </div>
+    <div class="stat">
+      <b>Ensino</b>
+      <span>Fundamental II e médio</span>
+    </div>
+    <div class="stat">
+      <b>Integral</b>
+      <span>Formação acadêmica e cívica</span>
+    </div>
+  </div>
+</section>
+
+<section class="section dark" id="campus">
+  <div class="section-head">
+    <div class="kicker">Conheça nossas instalações</div>
+    <h2>Um campus feito para aprender, conviver e descobrir.</h2>
+    <p class="lead">
+      A arquitetura do Bluewold combina espaços históricos
+      e estruturas adaptadas às necessidades de uma comunidade
+      escolar contemporânea.
+    </p>
+  </div>
+
+  <div class="cards">
+
+    <article class="card">
+      <div class="card-image campus1">
+        <span>01 · Entrada principal</span>
+      </div>
+      <div class="card-body">
+        <h3>Portal Bluewold</h3>
+        <p>O acesso principal da instituição, marcado pelo brasão e pela arquitetura histórica do edifício central.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image campus2">
+        <span>02 · Salas de aula</span>
+      </div>
+      <div class="card-body">
+        <h3>Bloco acadêmico</h3>
+        <p>Salas organizadas para aulas, projetos colaborativos, debates e acompanhamento pedagógico.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image campus3">
+        <span>03 · Biblioteca</span>
+      </div>
+      <div class="card-body">
+        <h3>Biblioteca Central</h3>
+        <p>Acervo literário, científico e histórico, além de espaços silenciosos para leitura e pesquisa.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image campus4">
+        <span>04 · Laboratórios</span>
+      </div>
+      <div class="card-body">
+        <h3>Centro de Ciências</h3>
+        <p>Ambientes destinados à experimentação, investigação científica e aprendizagem prática.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image campus5">
+        <span>05 · Pátio central</span>
+      </div>
+      <div class="card-body">
+        <h3>Pátio das Alamedas</h3>
+        <p>Área de convivência, encontros, cerimônias e atividades coletivas da comunidade escolar.</p>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="card-image campus6">
+        <span>06 · Espaços de estudo</span>
+      </div>
+      <div class="card-body">
+        <h3>Centro de Estudos</h3>
+        <p>Salas de apoio e ambientes para orientação, pesquisa individual e atividades em grupo.</p>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<section class="section" id="ensino">
+  <div class="section-head">
+    <div class="kicker">Proposta pedagógica</div>
+    <h2>Conhecimento em todas as direções.</h2>
+    <p class="lead">
+      A matriz curricular articula as áreas tradicionais do
+      conhecimento a experiências que estimulam curiosidade,
+      pensamento crítico e responsabilidade coletiva.
+    </p>
+  </div>
+
+  <div class="programs">
+
+    <div class="program">
+      <small>01 · LINGUAGENS</small>
+      <h3>Língua Portuguesa e Literatura</h3>
+      <p>Leitura, escrita, interpretação, produção textual e contato com diferentes expressões culturais.</p>
+    </div>
+
+    <div class="program">
+      <small>02 · CIÊNCIAS EXATAS</small>
+      <h3>Matemática e Física</h3>
+      <p>Raciocínio lógico, resolução de problemas, investigação e aplicação de conceitos.</p>
+    </div>
+
+    <div class="program">
+      <small>03 · CIÊNCIAS DA NATUREZA</small>
+      <h3>Biologia e Química</h3>
+      <p>Estudo dos sistemas naturais, experimentação e compreensão dos fenômenos que nos cercam.</p>
+    </div>
+
+    <div class="program">
+      <small>04 · HUMANIDADES</small>
+      <h3>História e Geografia</h3>
+      <p>Sociedade, território, memória, cultura e análise crítica dos acontecimentos.</p>
+    </div>
+
+    <div class="program">
+      <small>05 · FORMAÇÃO CÍVICA</small>
+      <h3>Ética e Cidadania</h3>
+      <p>Direitos, deveres, convivência democrática, liderança e responsabilidade social.</p>
+    </div>
+
+    <div class="program">
+      <small>06 · DESENVOLVIMENTO</small>
+      <h3>Educação Física e Artes</h3>
+      <p>Expressão, saúde, trabalho em equipe, criatividade e desenvolvimento integral.</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section dark" id="historia">
+  <div class="split">
+
+    <div>
+      <div class="kicker">Nossa história</div>
+      <h2>Uma construção feita de gerações.</h2>
+
+      <p class="lead">
+        O projeto do Colégio Militar Bluewold nasceu do ideal
+        de criar uma instituição capaz de unir educação de
+        excelência, formação cidadã e espírito de comunidade.
+        O edifício original foi planejado para ser duradouro:
+        pedra, madeira, grandes janelas e pátios internos.
+      </p>
+
+      <p class="lead">
+        Ao longo das décadas, novos espaços foram incorporados.
+        A escola cresceu, preservando elementos arquitetônicos
+        e símbolos que fazem parte de sua identidade.
+      </p>
+    </div>
+
+    <div class="timeline">
+
+      <div class="event">
+        <b>O projeto inicial</b>
+        <p>Uma proposta educacional toma forma e define os princípios que orientariam a instituição.</p>
+      </div>
+
+      <div class="event">
+        <b>Construção do edifício central</b>
+        <p>Erguido com referências neogóticas e inspiração em antigas escolas europeias, o prédio ganha sua torre do relógio e o pátio central.</p>
+      </div>
+
+      <div class="event">
+        <b>Ampliação do campus</b>
+        <p>Novos blocos, laboratórios, biblioteca e instalações esportivas passam a integrar o conjunto.</p>
+      </div>
+
+      <div class="event">
+        <b>Bluewold hoje</b>
+        <p>Uma comunidade escolar que preserva sua história enquanto acompanha os desafios da educação contemporânea.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="quote">
+  <blockquote>
+    “Veritas non evadit.”
+    <br>
+    <span style="font-size:.55em">A verdade não escapa.</span>
+  </blockquote>
+  <cite>Lema institucional do Colégio Militar Bluewold</cite>
+</section>
+
+<section class="notice" id="contato">
+  <div>
+    <h3>Bem-vindo ao Bluewold.</h3>
+    <p>Conheça nossa instituição, nossa história e os espaços que fazem parte dela.</p>
+  </div>
+  <a href="#inicio">Voltar ao início ↑</a>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+
+    <div>
+      <div class="brand">
+        <div class="crest">B</div>
+        <div>
+          <strong>BLUEWOLD</strong>
+          <small>COLÉGIO MILITAR</small>
+        </div>
+      </div>
+
+      <p>Tradição, conhecimento e compromisso com a formação integral.</p>
+      <div class="fiction">Instituição fictícia · Projeto narrativo BLUEWOLD</div>
+    </div>
+
+    <div>
+      <h4>Explore</h4>
+      <p>
+        <a href="#instituicao">A instituição</a><br>
+        <a href="#campus">Conheça o campus</a><br>
+        <a href="#ensino">Proposta pedagógica</a><br>
+        <a href="#historia">Nossa história</a>
+      </p>
+    </div>
+
+    <div>
+      <h4>Informações</h4>
+      <p>
+        Secretaria escolar<br>
+        Atendimento institucional<br>
+        Comunicação
+      </p>
+      <p>Conteúdo e dados apresentados como parte de uma obra ficcional.</p>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    <span>© Colégio Militar Bluewold</span>
+    <span>VERITAS NON EVADIT</span>
+  </div>
+</footer>
+
+</body>
+  </html>
+  
