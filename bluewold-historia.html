@@ -1,0 +1,437 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUEWOLD — Arquivo Histórico &amp; Mitológico | Veritas Non Evadit</title>
+
+  <!-- Tipografia Clássica, Gótica e Arquivística -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#06080d',
+            abyss: '#0a0e18',
+            midnight: '#0f1626',
+            slatearch: '#192133',
+            parchment: '#e7decb',
+            parchmentDim: '#bfb39b',
+            parchmentDark: '#8c806a',
+            goldAntique: '#c5a059',
+            goldMuted: '#8a6b32',
+            crimsonSeal: '#7c1d1d',
+            crimsonGlow: '#a82828',
+          },
+          fontFamily: {
+            display: ['"Cinzel Decorative"', 'serif'],
+            heading: ['"Cinzel"', 'serif'],
+            serif: ['"Cormorant Garamond"', '"EB Garamond"', 'Georgia', 'serif'],
+            body: ['"EB Garamond"', 'Georgia', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ==========================================================================
+       ESTÉTICA DARK ACADEMIA, GÓTICA & MANUSCRITOS ANTIGOS
+       ========================================================================== */
+    :root {
+      --bg-primary: #06080d;
+      --bg-secondary: #0b101c;
+      --bg-card: rgba(15, 22, 38, 0.78);
+      --text-main: #e5dcc8;
+      --text-muted: #a69b84;
+      --accent-gold: #c5a059;
+      --accent-gold-dim: rgba(197, 160, 89, 0.25);
+      --border-stone: rgba(197, 160, 89, 0.22);
+      --crimson: #7c1d1d;
+    }
+
+    /* Modo Subterrâneo quando o Archivum Occultum está ativo */
+    body.occult-mode {
+      --bg-primary: #030305;
+      --bg-secondary: #070609;
+      --bg-card: rgba(12, 8, 11, 0.9);
+      --text-main: #d8cfc2;
+      --text-muted: #8a7c78;
+      --accent-gold: #9e3232;
+      --accent-gold-dim: rgba(158, 50, 50, 0.28);
+      --border-stone: rgba(158, 50, 50, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-main);
+      font-family: 'EB Garamond', Georgia, serif;
+      overflow-x: hidden;
+      transition: background-color 0.9s ease, color 0.7s ease;
+    }
+
+    /* Granulação sutil de pergaminho e pedra */
+    .grain-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.042;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Vinheta arquivística */
+    .vignette-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 40;
+      background: radial-gradient(circle at 50% 45%, transparent 52%, rgba(2, 4, 8, 0.78) 100%);
+    }
+
+    /* Scrollbar personalizada */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #06080d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b261d;
+      border: 1px solid rgba(197, 160, 89, 0.25);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #8a6b32;
+    }
+
+    /* Textura de Mármore e Pedra Esculpida */
+    .stone-panel {
+      background:
+        radial-gradient(ellipse at top left, rgba(197, 160, 89, 0.06), transparent 60%),
+        linear-gradient(165deg, rgba(16, 23, 39, 0.92) 0%, rgba(8, 11, 19, 0.96) 100%);
+      border: 1px solid var(--border-stone);
+      box-shadow:
+        0 14px 40px -12px rgba(0, 0, 0, 0.85),
+        inset 0 1px 0 rgba(231, 222, 203, 0.06);
+      backdrop-filter: blur(8px);
+      transition: border-color 0.4s ease, transform 0.35s ease, box-shadow 0.4s ease;
+    }
+
+    .stone-panel:hover {
+      border-color: rgba(197, 160, 89, 0.45);
+    }
+
+    body.occult-mode .stone-panel {
+      background:
+        radial-gradient(ellipse at top left, rgba(124, 29, 29, 0.09), transparent 65%),
+        linear-gradient(165deg, rgba(14, 9, 12, 0.95) 0%, rgba(5, 4, 6, 0.98) 100%);
+    }
+
+    /* Textura de Pergaminho Antigo para Leitura de Manuscritos */
+    .parchment-sheet {
+      background-color: #dfd3bc;
+      background-image:
+        radial-gradient(circle at 18% 12%, rgba(138, 107, 50, 0.14), transparent 45%),
+        radial-gradient(circle at 85% 88%, rgba(92, 68, 33, 0.22), transparent 50%),
+        linear-gradient(180deg, rgba(255, 248, 232, 0.55) 0%, rgba(194, 177, 145, 0.45) 100%);
+      color: #1e1810;
+      box-shadow:
+        0 25px 65px rgba(0, 0, 0, 0.92),
+        inset 0 0 60px rgba(82, 60, 30, 0.28);
+      border: 1px solid #9c8660;
+    }
+
+    /* Letra Capitular Iluminada */
+    .drop-cap::first-letter {
+      float: left;
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3.4rem;
+      line-height: 0.82;
+      padding-top: 4px;
+      padding-right: 12px;
+      padding-left: 2px;
+      color: var(--accent-gold);
+      text-shadow: 0 2px 12px rgba(197, 160, 89, 0.35);
+    }
+
+    .parchment-sheet .drop-cap::first-letter {
+      color: #6e1b1b;
+      text-shadow: none;
+    }
+
+    /* Tarja de Censura Interativa */
+    .redacted {
+      background-color: #090a0f;
+      color: transparent;
+      padding: 0 6px;
+      border-radius: 2px;
+      border-bottom: 1px dashed rgba(197, 160, 89, 0.35);
+      user-select: none;
+      cursor: help;
+      transition: all 0.4s ease;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+    }
+
+    .redacted:hover,
+    .redacted.revealed {
+      background-color: rgba(124, 29, 29, 0.25);
+      color: #d49b9b;
+      border-bottom-color: #a82828;
+    }
+
+    .parchment-sheet .redacted {
+      background-color: #1c1712;
+      color: transparent;
+    }
+    .parchment-sheet .redacted:hover,
+    .parchment-sheet .redacted.revealed {
+      background-color: rgba(110, 27, 27, 0.16);
+      color: #6e1b1b;
+    }
+
+    /* Sussurros Fantasmagóricos nas Margens (Segredo #1) */
+    .ghost-whisper {
+      position: fixed;
+      pointer-events: none;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.28em;
+      font-size: 0.72rem;
+      color: rgba(197, 160, 89, 0);
+      transition: color 2.2s ease, transform 4s ease;
+      z-index: 35;
+      text-transform: uppercase;
+    }
+    .ghost-whisper.visible {
+      color: rgba(197, 160, 89, 0.22);
+      transform: translateY(-8px);
+    }
+    body.occult-mode .ghost-whisper.visible {
+      color: rgba(168, 40, 40, 0.28);
+    }
+
+    /* Animação de Luz de Vela e Lua */
+    @keyframes moonPulse {
+      0%, 100% { opacity: 0.55; transform: scale(1); }
+      50% { opacity: 0.82; transform: scale(1.03); }
+    }
+    .moon-aura {
+      animation: moonPulse 9s ease-in-out infinite;
+    }
+
+    @keyframes slowRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .astrolabe-spin {
+      animation: slowRotate 140s linear infinite;
+      transform-origin: center;
+    }
+
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .section-enter {
+      animation: fadeSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Divisória Ornamental */
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.45), transparent);
+    }
+
+    /* Brilho de Hover nos Sigilos */
+    .sigil-svg {
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease;
+    }
+    .group:hover .sigil-svg {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.45));
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-goldAntique/30 selection:text-parchment">
+
+  <!-- Camadas Atmosféricas -->
+  <div class="grain-overlay" aria-hidden="true"></div>
+  <div class="vignette-overlay" aria-hidden="true"></div>
+  <canvas id="dust-canvas" class="fixed inset-0 pointer-events-none z-20" aria-hidden="true"></canvas>
+
+  <!-- Inscrições Fantasmagóricas que surgem discretamente durante a leitura -->
+  <div id="ghost-whisper-left" class="ghost-whisper hidden lg:block left-5 top-1/3" aria-hidden="true">QUI CUSTODIT IPSOS CUSTODES</div>
+  <div id="ghost-whisper-right" class="ghost-whisper hidden lg:block right-5 bottom-1/4" aria-hidden="true">SUB LAPIDE DORMIT MEMORIA</div>
+
+  <!-- Notificação Diegética / Mensagem do Arquivo (substitui qualquer alert) -->
+  <div id="archive-toast" class="fixed bottom-6 right-6 z-50 max-w-sm transform translate-y-24 opacity-0 pointer-events-none transition-all duration-500">
+    <div class="stone-panel rounded-lg p-4 border-l-4 border-goldAntique shadow-2xl">
+      <div class="flex items-start gap-3">
+        <span class="text-goldAntique text-lg mt-0.5">✦</span>
+        <div>
+          <p id="toast-title" class="font-heading text-xs tracking-widest uppercase text-goldAntique font-semibold">Nota do Arquivista</p>
+          <p id="toast-message" class="font-serif text-sm text-parchment/90 mt-1 leading-snug"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       ABERTURA MONUMENTAL (HERO)
+       ======================================================================== -->
+  <header id="hero-portal" class="relative min-h-screen flex flex-col justify-between overflow-hidden border-b border-goldAntique/20">
+    <!-- Fundo Arquitetônico Gótico, Lua Encoberta e Biblioteca Antiga -->
+    <div class="absolute inset-0 z-0">
+      <!-- Céu Noturno Profundo & Brilho Lunar -->
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_24%,rgba(36,52,89,0.42)_0%,rgba(11,16,28,0.92)_48%,#05070c_100%)]"></div>
+
+      <!-- Lua Parcialmente Encoberta por Eclipse -->
+      <div class="moon-aura absolute top-12 left-1/2 -translate-x-1/2 w-64 h-64 sm:w-80 sm:h-80 rounded-full bg-[radial-gradient(circle_at_35%_35%,rgba(232,224,207,0.22),rgba(197,160,89,0.08)_52%,transparent_72%)] blur-md"></div>
+      <svg class="absolute top-14 left-1/2 -translate-x-1/2 w-56 h-56 sm:w-72 sm:h-72 opacity-35" viewBox="0 0 200 200" fill="none">
+        <circle cx="100" cy="100" r="68" stroke="#c5a059" stroke-width="0.6" stroke-dasharray="3 3" />
+        <circle cx="100" cy="100" r="86" stroke="#e7decb" stroke-width="0.4" opacity="0.4" />
+        <!-- Disco Lunar -->
+        <circle cx="100" cy="100" r="46" fill="url(#moonGrad)" />
+        <!-- Sombra do Eclipse -->
+        <circle cx="116" cy="92" r="44" fill="#06080d" opacity="0.88" />
+        <defs>
+          <radialGradient id="moonGrad" cx="35%" cy="35%" r="65%">
+            <stop offset="0%" stop-color="#f2ead8" stop-opacity="0.7" />
+            <stop offset="65%" stop-color="#c5a059" stop-opacity="0.3" />
+            <stop offset="100%" stop-color="#192133" stop-opacity="0" />
+          </radialGradient>
+        </defs>
+      </svg>
+
+      <!-- Silhueta de Arcos Góticos, Torres e Estantes Antigas -->
+      <svg class="absolute inset-0 w-full h-full object-cover opacity-30" preserveAspectRatio="xMidYMax slice" viewBox="0 0 1440 800" fill="none">
+        <!-- Arcos Ogivais Monumentais -->
+        <path d="M120 800 V320 Q120 140 280 80 Q440 140 440 320 V800" stroke="#c5a059" stroke-width="1" opacity="0.35" />
+        <path d="M1000 800 V320 Q1000 140 1160 80 Q1320 140 1320 320 V800" stroke="#c5a059" stroke-width="1" opacity="0.35" />
+        <path d="M480 800 V260 Q480 70 720 15 Q960 70 960 260 V800" stroke="#e7decb" stroke-width="1.2" opacity="0.28" />
+        <!-- Colunas e Contrafortes -->
+        <rect x="95" y="250" width="24" height="550" fill="#090d16" stroke="#c5a059" stroke-width="0.4" opacity="0.5" />
+        <rect x="440" y="220" width="28" height="580" fill="#090d16" stroke="#c5a059" stroke-width="0.4" opacity="0.5" />
+        <rect x="972" y="220" width="28" height="580" fill="#090d16" stroke="#c5a059" stroke-width="0.4" opacity="0.5" />
+        <rect x="1320" y="250" width="24" height="550" fill="#090d16" stroke="#c5a059" stroke-width="0.4" opacity="0.5" />
+        <!-- Rosácea Central -->
+        <circle cx="720" cy="210" r="88" stroke="#c5a059" stroke-width="0.8" opacity="0.32" />
+        <circle cx="720" cy="210" r="64" stroke="#c5a059" stroke-width="0.5" stroke-dasharray="4 4" opacity="0.3" />
+        <path d="M720 122 L720 298 M632 210 L808 210 M658 148 L782 272 M782 148 L658 272" stroke="#c5a059" stroke-width="0.5" opacity="0.25" />
+        <!-- Horizonte de Torres do Colégio -->
+        <path d="M0 800 L0 640 L80 640 L80 560 L110 510 L140 560 L140 650 L290 650 L290 590 L330 590 L330 660 L540 660 L540 615 L900 615 L900 660 L1110 660 L1110 590 L1150 590 L1150 650 L1300 650 L1300 560 L1330 510 L1360 560 L1360 640 L1440 640 L1440 800 Z" fill="#05070c" />
+      </svg>
+
+      <!-- Gradiente Inferior de Fusão -->
+      <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-[#06080d] via-[#06080d]/85 to-transparent"></div>
+    </div>
+
+    <!-- Barra Superior Discreta do Portal -->
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 pt-6 flex items-center justify-between text-xs font-heading tracking-[0.25em] text-parchmentDim/80">
+      <span>CODEX ARCHIVI · FUND. MCCCXLVIII</span>
+      <span class="hidden sm:inline text-goldAntique/80">COLÉGIO MILITAR BLUEWOLD</span>
+      <span id="hero-secret-counter" class="font-mono text-[11px] text-parchmentDark" title="Fragmentos ocultos descobertos">FRAGMENTOS: 0/5</span>
+    </div>
+
+    <!-- Centro Monumental -->
+    <div class="relative z-10 max-w-4xl mx-auto px-6 py-12 text-center flex flex-col items-center">
+      <!-- Brasão Interativo de Bluewold (Clicar 3x na lua do brasão revela pista/segredo) -->
+      <button id="hero-crest-btn" type="button" aria-label="Brasão do Colégio Militar Bluewold" class="group relative mb-7 focus:outline-none cursor-pointer" title="Brasão da Ordem e do Colégio">
+        <div class="absolute -inset-4 rounded-full bg-goldAntique/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        <svg class="w-28 h-32 sm:w-32 sm:h-36 drop-shadow-[0_8px_24px_rgba(0,0,0,0.9)] transition-transform duration-700 group-hover:scale-105" viewBox="0 0 160 185" fill="none">
+          <!-- Astrolábio Externo Giratório -->
+          <g class="astrolabe-spin">
+            <circle cx="80" cy="86" r="72" stroke="#c5a059" stroke-width="0.7" stroke-dasharray="2 4" opacity="0.55" />
+            <circle cx="80" cy="86" r="65" stroke="#c5a059" stroke-width="0.4" opacity="0.35" />
+          </g>
+          <!-- Escudo Gótico -->
+          <path d="M32 32 H128 V92 C128 130 80 158 80 158 C80 158 32 130 32 92 V32 Z" fill="#0b1120" stroke="#c5a059" stroke-width="2" />
+          <path d="M38 38 H122 V90 C122 123 80 149 80 149 C80 149 38 123 38 90 V38 Z" stroke="#c5a059" stroke-width="0.6" opacity="0.6" />
+          <!-- Espadas/Alabardas Cruzadas -->
+          <line x1="50" y1="50" x2="110" y2="122" stroke="#bfb39b" stroke-width="1.3" opacity="0.75" />
+          <line x1="110" y1="50" x2="50" y2="122" stroke="#bfb39b" stroke-width="1.3" opacity="0.75" />
+          <!-- Arco Ogival Interno -->
+          <path d="M58 118 V76 Q80 48 102 76 V118" stroke="#c5a059" stroke-width="1.2" fill="none" />
+          <!-- Lua Eclipsada Central -->
+          <circle cx="80" cy="84" r="14" fill="#e7decb" />
+          <circle id="crest-eclipse-shadow" cx="85" cy="81" r="12" fill="#0b1120" class="transition-all duration-500" />
+          <!-- Estrela de Sete Pontas Inferior -->
+          <polygon points="80,108 82,114 88,114 83,118 85,124 80,120 75,124 77,118 72,114 78,114" fill="#c5a059" />
+          <!-- Faixa do Lema -->
+          <path d="M22 156 Q80 172 138 156 L132 172 Q80 185 28 172 Z" fill="#0f1626" stroke="#c5a059" stroke-width="1" />
+          <text x="80" y="169" text-anchor="middle" fill="#e7decb" font-family="Cinzel, serif" font-size="7.5" letter-spacing="1.6">VERITAS NON EVADIT</text>
+        </svg>
+      </button>
+
+      <p class="font-heading text-xs sm:text-sm tracking-[0.4em] uppercase text-goldAntique mb-3">
+        Arquivo Central &amp; Memorial Subterrâneo
+      </p>
+
+      <h1 class="font-display text-5xl sm:text-7xl md:text-8xl font-bold tracking-[0.14em] text-parchment drop-shadow-[0_6px_28px_rgba(0,0,0,0.95)]">
+        BLUEWOLD
+      </h1>
+
+      <p class="font-heading italic text-lg sm:text-2xl tracking-[0.22em] text-goldAntique/95 mt-3">
+        Veritas Non Evadit.
+      </p>
+
+      <div class="w-32 h-px bg-gradient-to-r from-transparent via-goldAntique to-transparent my-7"></div>
+
+      <blockquote class="max-w-2xl font-serif italic text-lg sm:text-xl md:text-2xl text-parchmentDim leading-relaxed">
+        “Antes de ser uma instituição, Bluewold foi testemunha. Antes de seus muros, existiam histórias. E antes que a história fosse escrita, houve coisas que jamais deveriam ter sido lembradas.”
+      </blockquote>
+
+      <div class="mt-10 flex flex-col sm:flex-row items-center gap-4">
+        <button id="enter-archive-btn" type="button" class="group relative px-8 py-4 rounded bg-midnight/90 border border-goldAntique/70 text-parchment font-heading text-xs sm:text-sm tracking-[0.28em] uppercase overflow-hidden shadow-[0_0_30px_rgba(197,160,89,0.16)] hover:border-goldAntique hover:shadow-[0_0_35px_rgba(197,160,89,0.32)] transition-all duration-500 cursor-pointer">
+          <span class="relative z-10 flex items-center gap-3">
+            <span>Acessar os Registros</span>
+            <span class="text-goldAntique transition-transform duration-300 group-hover:translate-x-1">⟶</span>
+          </span>
+          <div class="absolute inset-0 bg-gradient-to-r from-goldAntique/0 via-goldAntique/15 to-goldAntique/0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Indicador de Continuidade -->
+    <div class="relative z-10 pb-6 text-center">
+      <span class="font-mono text-[11px] tracking-[0.3em] uppercase text-parchmentDark/75">
+        Catálogo IV · Acesso Autorizado à Sala de Leitura
+      </span>
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       NAVEGAÇÃO PRINCIPAL DO ARQUIVO & PESQUISA GLOBAL
+       ======================================================================== -->
+  <nav id="archive-nav" class="sticky top-0 z-30 bg-[#070a11]/95 backdrop-blur-md border-b border-goldAntique/25 shadow-2xl transition-colors duration-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="flex flex-wrap items-center justify-between py-3 gap-3">
+        <!-- Identificador Compacto -->
+        <a href="#hero-portal" class="flex items-center gap-2.5 group">
+          <span class="w-2.5 h-2.5 rotate-45 border border-goldAntique bg-goldAntique/20 group-hover:bg-goldAntique transition-colors"></span>
+          
