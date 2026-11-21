@@ -1,0 +1,755 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BLUEWOLD — Arquivo Histórico &amp; Mitológico | Veritas Non Evadit</title>
+
+  <!-- Fontes Clássicas com Fallback Seguro Offline -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700;800&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ==========================================================================
+       1. VARIÁVEIS DE TEMA & RESET ESTRUTURAL (ZERO BLOQUEIO DE CLIQUES)
+       ========================================================================== */
+    :root {
+      --bg-abyss: #07090d;
+      --bg-navy: #0d1522;
+      --bg-slate: #131c2c;
+      --bg-card: rgba(13, 21, 34, 0.92);
+      --text-parchment: #e6dec8;
+      --text-dim: #b5aa92;
+      --text-muted: #867b66;
+      --gold: #c5a059;
+      --gold-soft: rgba(197, 160, 89, 0.25);
+      --gold-border: rgba(197, 160, 89, 0.32);
+      --crimson: #8b2020;
+      --crimson-bright: #c43c3c;
+      --font-display: 'Cinzel Decorative', 'Cinzel', 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-heading: 'Cinzel', 'Playfair Display', Georgia, 'Times New Roman', serif;
+      --font-body: 'EB Garamond', Georgia, 'Times New Roman', serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    body.occult-mode {
+      --bg-abyss: #030305;
+      --bg-navy: #090609;
+      --bg-slate: #110a0f;
+      --bg-card: rgba(10, 6, 9, 0.96);
+      --text-parchment: #dfd5c7;
+      --text-dim: #9d8c88;
+      --text-muted: #6f5f5c;
+      --gold: #b33636;
+      --gold-soft: rgba(179, 54, 54, 0.24);
+      --gold-border: rgba(179, 54, 54, 0.38);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-abyss);
+      color: var(--text-parchment);
+      font-family: var(--font-body);
+    }
+
+    body {
+      background-color: var(--bg-abyss);
+      color: var(--text-parchment);
+      font-family: var(--font-body);
+      line-height: 1.65;
+      overflow-x: hidden;
+      min-height: 100vh;
+      position: relative;
+      transition: background-color 0.6s ease, color 0.5s ease;
+    }
+
+    /* Camadas puramente visuais: pointer-events: none e z-index baixo garantidos */
+    .decorative-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none !important;
+      z-index: 1;
+    }
+
+    .grain-layer {
+      opacity: 0.04;
+      background-image: radial-gradient(rgba(230, 222, 200, 0.35) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    .vignette-layer {
+      background: radial-gradient(circle at 50% 40%, transparent 50%, rgba(2, 3, 6, 0.82) 100%);
+    }
+
+    #dust-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none !important;
+      z-index: 2;
+    }
+
+    /* Garantia de que toda estrutura interativa esteja acima das camadas decorativas */
+    header, nav, main, footer, .modal-backdrop, .toast-box {
+      position: relative;
+      z-index: 10;
+    }
+
+    button, input, select, a {
+      font-family: inherit;
+      color: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       2. UTILITÁRIOS DE LAYOUT & ESTÉTICA DARK ACADEMIA
+       ========================================================================== */
+    .container {
+      width: 100%;
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .stone-card {
+      background:
+        radial-gradient(circle at top left, var(--gold-soft), transparent 55%),
+        linear-gradient(165deg, var(--bg-navy) 0%, #080c14 100%);
+      border: 1px solid var(--gold-border);
+      border-radius: 8px;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.78), inset 0 1px 0 rgba(230, 222, 200, 0.06);
+      transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .stone-card:hover {
+      border-color: var(--gold);
+    }
+
+    .drop-cap::first-letter {
+      float: left;
+      font-family: var(--font-display);
+      font-size: 3.3rem;
+      line-height: 0.85;
+      padding-right: 0.75rem;
+      padding-top: 0.2rem;
+      color: var(--gold);
+      text-shadow: 0 2px 10px rgba(197, 160, 89, 0.3);
+    }
+
+    .mono-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      border: 1px solid var(--gold-border);
+      background: rgba(7, 9, 13, 0.75);
+      color: var(--text-dim);
+    }
+
+    .badge-completo { border-color: rgba(197, 160, 89, 0.55); color: #e2c078; }
+    .badge-fragmentado { border-color: rgba(217, 140, 54, 0.55); color: #e6a865; }
+    .badge-censurado { border-color: rgba(196, 60, 60, 0.65); color: #e07a7a; background: rgba(139, 32, 32, 0.22); }
+    .badge-desconhecido { border-color: rgba(145, 152, 168, 0.5); color: #b7becd; }
+
+    /* Tarjas de Censura Clicáveis */
+    .redacted-block {
+      display: inline;
+      background: #040508;
+      color: transparent;
+      border: 1px dashed var(--gold-border);
+      border-radius: 3px;
+      padding: 0.05rem 0.45rem;
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+
+    .redacted-block::before {
+      content: '[CENSURADO — CLIQUE PARA FORÇAR LEITURA PARCIAL]';
+      color: var(--gold);
+      font-size: 0.75em;
+      letter-spacing: 0.06em;
+    }
+
+    .redacted-block.revealed {
+      background: rgba(139, 32, 32, 0.24);
+      color: #ebb5b5;
+      border-style: solid;
+      border-color: var(--crimson-bright);
+    }
+
+    .redacted-block.revealed::before {
+      content: '';
+    }
+
+    /* Sussurros nas margens (Segredo Sutil) */
+    .margin-whisper {
+      position: fixed;
+      z-index: 5;
+      pointer-events: none;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(197, 160, 89, 0);
+      transition: color 1.8s ease, transform 2.5s ease;
+    }
+
+    .margin-whisper.active {
+      color: rgba(197, 160, 89, 0.32);
+      transform: translateY(-6px);
+    }
+
+    /* ==========================================================================
+       3. ABERTURA MONUMENTAL (HERO)
+       ========================================================================== */
+    .hero-section {
+      min-height: 92vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--gold-border);
+      background:
+        radial-gradient(circle at 50% 24%, rgba(30, 48, 82, 0.45) 0%, rgba(10, 15, 26, 0.94) 52%, #05070b 100%);
+    }
+
+    .hero-bg-art {
+      position: absolute;
+      inset: 0;
+      pointer-events: none !important;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-top-bar {
+      position: relative;
+      z-index: 12;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1.25rem 0;
+      border-bottom: 1px solid rgba(197, 160, 89, 0.14);
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+    }
+
+    .hero-center {
+      position: relative;
+      z-index: 12;
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 3rem 1.25rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .crest-button {
+      background: transparent;
+      border: none;
+      padding: 0.5rem;
+      margin-bottom: 1.25rem;
+      border-radius: 50%;
+      transition: transform 0.4s ease, filter 0.4s ease;
+    }
+
+    .crest-button:hover {
+      transform: scale(1.06);
+      filter: drop-shadow(0 0 18px rgba(197, 160, 89, 0.45));
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 8vw, 5.6rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--text-parchment);
+      text-shadow: 0 6px 28px rgba(0, 0, 0, 0.95);
+      line-height: 1.05;
+    }
+
+    .hero-motto {
+      font-family: var(--font-heading);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2.5vw, 1.55rem);
+      letter-spacing: 0.24em;
+      color: var(--gold);
+      margin-top: 0.65rem;
+    }
+
+    .hero-divider {
+      width: 140px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 1.5rem 0;
+    }
+
+    .hero-intro {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: var(--text-dim);
+      max-width: 680px;
+      line-height: 1.7;
+    }
+
+    .hero-cta-group {
+      margin-top: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .btn-monumental {
+      padding: 0.95rem 2.1rem;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #162238 0%, #0b111e 100%);
+      border: 1px solid var(--gold);
+      color: var(--text-parchment);
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.8), 0 0 20px rgba(197, 160, 89, 0.16);
+      transition: all 0.3s ease;
+    }
+
+    .btn-monumental:hover {
+      background: linear-gradient(180deg, #1e2e4a 0%, #10192b 100%);
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.9), 0 0 28px rgba(197, 160, 89, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      padding: 0.75rem 1.35rem;
+      border-radius: 6px;
+      background: rgba(13, 21, 34, 0.85);
+      border: 1px solid var(--gold-border);
+      color: var(--text-parchment);
+      font-family: var(--font-heading);
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      background: rgba(197, 160, 89, 0.14);
+    }
+
+    /* ==========================================================================
+       4. BARRA DE NAVEGAÇÃO FIXA (STICKY Z-INDEX 100)
+       ========================================================================== */
+    .archive-navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 10, 16, 0.97);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--gold-border);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.85);
+    }
+
+    .navbar-inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.75rem 0;
+    }
+
+    .brand-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.22em;
+      color: var(--text-parchment);
+    }
+
+    .brand-diamond {
+      width: 10px;
+      height: 10px;
+      transform: rotate(45deg);
+      border: 1px solid var(--gold);
+      background: rgba(197, 160, 89, 0.25);
+    }
+
+    .search-box-wrap {
+      position: relative;
+      flex: 1 1 240px;
+      max-width: 340px;
+    }
+
+    .archive-input, .archive-select {
+      width: 100%;
+      background: #070a11;
+      border: 1px solid var(--gold-border);
+      border-radius: 5px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.92rem;
+      color: var(--text-parchment);
+      outline: none;
+      transition: border-color 0.25s ease;
+    }
+
+    .archive-input:focus, .archive-select:focus {
+      border-color: var(--gold);
+    }
+
+    .search-results-dropdown {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 120;
+      max-height: 320px;
+      overflow-y: auto;
+      background: #0b111d;
+      border: 1px solid var(--gold);
+      border-radius: 6px;
+      padding: 0.4rem;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
+    }
+
+    .search-result-btn {
+      width: 100%;
+      text-align: left;
+      background: transparent;
+      border: none;
+      padding: 0.55rem 0.7rem;
+      border-radius: 4px;
+      display: block;
+      transition: background 0.2s ease;
+    }
+
+    .search-result-btn:hover {
+      background: rgba(197, 160, 89, 0.16);
+    }
+
+    .mobile-nav-btn {
+      display: none;
+      padding: 0.45rem 0.85rem;
+      border-radius: 5px;
+      background: #0d1522;
+      border: 1px solid var(--gold-border);
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .nav-tabs-list {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .nav-tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 0.45rem 0.72rem;
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .nav-tab-btn:hover {
+      color: var(--text-parchment);
+      border-color: var(--gold-border);
+      background: rgba(197, 160, 89, 0.08);
+    }
+
+    .nav-tab-btn.active {
+      color: var(--gold);
+      border-color: var(--gold);
+      background: rgba(197, 160, 89, 0.14);
+      font-weight: 700;
+    }
+
+    .nav-tab-btn.occult-tab {
+      color: #a86b6b;
+    }
+
+    .nav-tab-btn.occult-tab.active {
+      color: #e06c6c;
+      border-color: var(--crimson-bright);
+      background: rgba(139, 32, 32, 0.28);
+    }
+
+    @media (max-width: 960px) {
+      .mobile-nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .nav-tabs-list {
+        display: none;
+        width: 100%;
+        padding-top: 0.65rem;
+        border-top: 1px solid rgba(197, 160, 89, 0.18);
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.35rem;
+      }
+      .nav-tabs-list.open {
+        display: flex;
+      }
+    }
+
+    /* ==========================================================================
+       5. SEÇÕES PRINCIPAIS & GRADES RESPONSIVAS
+       ========================================================================== */
+    main.archive-content {
+      padding: 3rem 0 4.5rem;
+      min-height: 70vh;
+    }
+
+    .section-header {
+      border-bottom: 1px solid var(--gold-border);
+      padding-bottom: 1.4rem;
+      margin-bottom: 2.2rem;
+    }
+
+    .section-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.9rem, 4.5vw, 3.1rem);
+      letter-spacing: 0.08em;
+      color: var(--text-parchment);
+      line-height: 1.15;
+    }
+
+    .section-subtitle {
+      font-family: var(--font-body);
+      font-style: italic;
+      font-size: 1.18rem;
+      color: var(--text-dim);
+      max-width: 780px;
+      margin-top: 0.65rem;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .history-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1.75rem;
+      align-items: start;
+    }
+
+    @media (max-width: 920px) {
+      .history-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card-pad {
+      padding: 1.65rem;
+    }
+
+    .card-pad-lg {
+      padding: 2.1rem;
+    }
+
+    .prose-block h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border-bottom: 1px solid rgba(197, 160, 89, 0.2);
+      padding-bottom: 0.5rem;
+      margin: 1.75rem 0 0.9rem;
+    }
+
+    .prose-block h3:first-child {
+      margin-top: 0;
+    }
+
+    .prose-block p {
+      font-size: 1.12rem;
+      margin-bottom: 1rem;
+      color: var(--text-parchment);
+    }
+
+    /* Linha do Tempo Interativa */
+    .timeline-bar {
+      display: flex;
+      gap: 0.65rem;
+      overflow-x: auto;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--gold-border);
+      margin-bottom: 1.5rem;
+    }
+
+    .timeline-btn {
+      flex: 0 0 auto;
+      padding: 0.7rem 1.05rem;
+      border-radius: 6px;
+      background: #070a11;
+      border: 1px solid var(--gold-border);
+      text-align: left;
+      transition: all 0.25s ease;
+    }
+
+    .timeline-btn:hover {
+      border-color: var(--gold);
+    }
+
+    .timeline-btn.active {
+      background: rgba(197, 160, 89, 0.16);
+      border-color: var(--gold);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Abas de Mitologia */
+    .myth-tabs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 0.6rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .myth-tab-btn {
+      padding: 0.7rem 0.6rem;
+      border-radius: 6px;
+      background: #0b111d;
+      border: 1px solid var(--gold-border);
+      font-family: var(--font-heading);
+      font-size: 0.74rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: center;
+      transition: all 0.25s ease;
+    }
+
+    .myth-tab-btn:hover {
+      border-color: var(--gold);
+      color: var(--text-parchment);
+    }
+
+    .myth-tab-btn.active {
+      background: rgba(197, 160, 89, 0.18);
+      border-color: var(--gold);
+      color: var(--text-parchment);
+      font-weight: 700;
+    }
+
+    /* Barra de Filtros de Entidades */
+    .filter-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .filter-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+
+    /* ==========================================================================
+       6. MODAL DE LEITURA DE MANUSCRITO ANTIGO & DOSSIÊ (Z-INDEX 200)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(2, 3, 6, 0.88);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .modal-dialog {
+      width: 100%;
+      max-width: 840px;
+      max-height: 88vh;
+      overflow-y: auto;
+      border-radius: 8px;
+      position: relative;
+      animation: modalFadeIn 0.28s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Estética de Pergaminho Antigo para Leitura de Manuscritos */
+    .parchment-reader {
+      background:
+        radial-g
